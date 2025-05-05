@@ -1,7 +1,7 @@
 import lancedb
 import json
 
-DB_URI = "tmp/lancedb"
+DB_URI = "/home/pranjal/Downloads/fizanto/tmp/lancedb"
 TABLE_NAME = "email_memory"
 
 def check_stored_data():
@@ -27,31 +27,3 @@ def check_stored_data():
 if __name__ == "__main__":
     check_stored_data()
 
-
-
-
-
-# from agno.embedder.fastembed import FastEmbedEmbedder
-# from agno.agent import AgentKnowledge
-# from agno.vectordb.lancedb import LanceDb
-
-
-# query = "Did you receive the email about Lending Club Risk Management?"
-
-
-# knowledge_base = AgentKnowledge(
-#     vector_db=LanceDb(
-#         uri="tmp/lancedb",
-#         table_name="email_memory",
-#         embedder=FastEmbedEmbedder(id="BAAI/bge-small-en-v1.5")
-#     )
-# )
-
-# results = knowledge_base.search(query)
-# for result in results:
-#     print(result.content)
-
-
-# import sqlite3
-# from agno.memory.v2.memory import Memory
-# print("Memory module imported successfully.")

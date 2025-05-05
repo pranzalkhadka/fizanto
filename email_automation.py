@@ -8,6 +8,7 @@ from email.mime.text import MIMEText
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 ATTACHMENT_DIR = "attachments"
 os.makedirs(ATTACHMENT_DIR, exist_ok=True)
 
@@ -140,7 +141,10 @@ async def process_email():
         return {
             "status": "success",
             "message": "Email processed successfully.",
-            "saved_files": saved_files
+            "saved_files": saved_files,
+            "email_body": body,
+            "email_subject": subject,
+            "email_sender": sender
         }
     else:
         return {"status": "failed", "message": "No unread emails."}
