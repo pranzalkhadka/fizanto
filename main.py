@@ -1,13 +1,13 @@
 from dotenv import load_dotenv
 import os
 import pandas as pd
-import subprocess
-import shutil
-from groq import Groq
 import ast
+from groq import Groq
 
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+USER_PROMPT = os.getenv("USER_PROMPT")
+CSV_PATH = "/app/input/banlk_loan.csv"
 
 client = Groq(api_key=GROQ_API_KEY)
 
@@ -38,7 +38,7 @@ def generate_analysis_code(metadata: dict, user_prompt: str) -> str:
 
     Requirements:
     1. Import pandas as pd.
-    2. Load the CSV using pd.read_csv('/app/banlk_loan.csv', encoding='utf-8').
+    2. Load the CSV using pd.read_csv('/app/input/banlk_loan.csv', encoding='utf-8').
     3. Perform data analysis based on the prompt, including:
        - Summary statistics for numeric columns
        - Value counts for at least one categorical column
@@ -48,7 +48,7 @@ def generate_analysis_code(metadata: dict, user_prompt: str) -> str:
 
     Example Code:
     import pandas as pd
-    df = pd.read_csv('/app/banlk_loan.csv', encoding='utf-8')
+    df = pd.read_csv('/app/input/banlk_loan.csv', encoding='utf-8')
     print("Summary Statistics:")
     print(df[['Income', 'CCAvg']].describe().to_string())
     print("Personal Loan Counts:")
@@ -96,57 +96,33 @@ def generate_human_readable_summary(metadata: dict, analysis_output: str) -> str
         raise Exception(f"Failed to generate summary: {str(e)}")
 
 def main():
-    csv_path = "/home/pranjal/Downloads/fizanto/banlk_loan.csv"
-    user_prompt = "Give a simple analytics of this csv file"
-    
     try:
-        metadata = get_csv_metadata(csv_path)
+        metadata = get_csv_metadata(CSV_PATH)
     except Exception as e:
         print(f"Error reading CSV: {str(e)}")
         return
     
     try:
-        analysis_code = generate_analysis_code(metadata, user_prompt)
+        analysis_code = generate_analysis_code(metadata, USER_PROMPT)
     except Exception as e:
         print(f"Error generating code: {str(e)}")
         return
     
     try:
-        # Create temporary directory for Docker
-        os.makedirs("temp", exist_ok=True)
-        temp_script_path = "temp/script.py"
-        temp_csv_path = "temp/banlk_loan.csv"
-        
-        # Write generated code to temporary script
-        with open(temp_script_path, "w") as f:
-            f.write(analysis_code)
-        
-        # Copy CSV to temporary directory
-        shutil.copy(csv_path, temp_csv_path)
-        
-        # Run Docker container
-        result = subprocess.run(
-            ["docker", "run", "--rm", "-v", f"{os.getcwd()}/temp:/app", "pandas-analysis", "python", "script.py"],
-            capture_output=True, text=True
-        )
-        
-        # Check for Docker errors
-        if result.stderr:
-            print(f"Docker execution error: {result.stderr}")
-            return
-        
-        analysis_output = result.stdout
+        import sys
+        from io import StringIO
+        old_stdout = sys.stdout
+        sys.stdout = mystdout = StringIO()
+        exec(analysis_code)
+        sys.stdout = old_stdout
+        analysis_output = mystdout.getvalue()
         
         summary = generate_human_readable_summary(metadata, analysis_output)
         print("\n=== Analysis Summary ===")
         print(summary)
                 
     except Exception as e:
-        print(f"Local execution error: {str(e)}")
-    finally:
-        # Clean up temporary files
-        if os.path.exists("temp"):
-            shutil.rmtree("temp")
+        print(f"Execution error: {str(e)}")
 
 if __name__ == "__main__":
     main()
