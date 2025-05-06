@@ -6,6 +6,11 @@ from groq import Groq
 from io import StringIO
 import sys
 import requests
+# import google.generativeai as genai
+
+# genai.configure(api_key="key")  
+
+# model = genai.GenerativeModel('gemini-1.5-flash') 
 
 
 load_dotenv()
@@ -74,8 +79,9 @@ def generate_visualization_code(metadata: dict, csv_path: str, output_path: str)
     plt.close()
     """
     try:
+        # response = model.generate_content(prompt)
         response = client.chat.completions.create(
-            model="llama3-70b-8192",
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": vis_prompt},
