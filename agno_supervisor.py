@@ -1,5 +1,6 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
+from agno.models.openrouter import OpenRouter
 from agno.team import Team
 import os
 from agno.vectordb.lancedb import LanceDb
