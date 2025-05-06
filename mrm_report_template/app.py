@@ -6,7 +6,9 @@ from agno.team import Team
 from agno.vectordb.lancedb import LanceDb
 from agno.embedder.fastembed import FastEmbedEmbedder
 from agno.tools.file import FileTools
-import json
+from agno.tools import tool
+from weasyprint import HTML
+from agno.tools import tool
 import os
 
 knowledge_base = AgentKnowledge(
@@ -130,6 +132,33 @@ Appendices_agent = Agent(
 )
 
 
+@tool(
+    name="html_to_pdf",
+    description="Convert an HTML file to a PDF file",
+    show_result=False,
+    stop_after_tool_call=False,
+    cache_results=False
+)
+def html_to_pdf(input_file: str = "report.html", output_file: str = "report.pdf") -> str:
+    """
+    Convert an HTML file to a PDF file using WeasyPrint.
+    
+    Args:
+        input_file (str): Path to the input HTML file (default: 'report.html').
+        output_file (str): Path to the output PDF file (default: 'report.pdf').
+    
+    Returns:
+        str: Confirmation message indicating the PDF was saved.
+    """
+    try:
+        if not os.path.exists(input_file):
+            raise FileNotFoundError(f"Input file {input_file} not found")
+        HTML(input_file).write_pdf(output_file)
+        return f"PDF saved at {output_file}"
+    except Exception as e:
+        return f"Error converting HTML to PDF: {str(e)}"
+
+
 
 supervisor_team = Team(
     name="Supervisor Team",
@@ -147,7 +176,7 @@ supervisor_team = Team(
     model=Gemini(id="gemini-2.0-flash"),
     # model=OpenRouter(id="gpt-4o"),
     description="Coordinates the generation of a Model Risk Management (MRM) Validation Report.",
-    tools=[FileTools()],
+    tools=[FileTools(), html_to_pdf],
     # tools=[FileTools(base_dir=".", read_files=True, save_files=True, list_files=False)],
     instructions=[
     "When the query requests a Model Risk Management (MRM) Validation Report, follow these steps:",
@@ -163,7 +192,8 @@ supervisor_team = Team(
     "3. Collect the Markdown content into a dictionary with keys: introduction_text, model_overview_text, validation_scope_text, methodology_text, recommendations_text, conclusion_text, appendices_text.",
     "4. Use that dictionary to fill the placeholders in the HTML template.",
     "5. Save the HTML file at report.html."
-    "6. Return a message: 'HTML saved at report.html'."
+    "6. Convert 'report.html' to 'report.pdf' using html_to_pdf tool."
+    "7. Return a message: 'HTML saved at report.html and and PDF saved at report.pdf'."
 ],
     show_tool_calls=False,
     markdown=False,
