@@ -29,6 +29,10 @@
             padding: 5cm 0;
             border-bottom: 2pt solid #003087;
             page-break-after: always;
+            min-height: 25.7cm; /* Ensure full A4 page */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .cover-page h1 {
             font-size: 24pt;
@@ -46,6 +50,10 @@
             margin: 2cm 0;
             page-break-before: always;
             page-break-after: always;
+            min-height: 25.7cm;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         .toc h2 {
             font-size: 18pt;
@@ -70,7 +78,13 @@
         /* Section Styles */
         .section {
             margin: 2cm 0;
+            page-break-before: always;
+            page-break-after: always;
             page-break-inside: avoid;
+            min-height: 25.7cm; /* Ensure each section fills at least one A4 page */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         .section h2 {
             font-size: 16pt;
@@ -118,13 +132,15 @@
 
         /* Footer */
         .footer {
+            position: fixed;
+            bottom: 1cm;
+            left: 2cm;
+            right: 2cm;
             text-align: center;
-            margin-top: 2cm;
-            padding: 1cm 0;
-            border-top: 1pt solid #ccc;
+            padding: 0.5cm 0;
             font-size: 10pt;
             color: #666;
-            page-break-before: avoid;
+            border-top: 1pt solid #ccc;
         }
 
         /* Print-Specific Styles */
@@ -141,31 +157,33 @@
                 box-shadow: none;
             }
             .toc a:hover {
-                text-decoration: none; /* Remove hover effects for PDF */
+                text-decoration: none; /* Remove hover for PDF */
             }
             .section, .table, .toc, .footer {
                 page-break-inside: avoid;
             }
-            /* Ensure no unwanted page breaks within headings or lists */
             h2, h3, ul, li {
                 page-break-after: avoid;
             }
-            /* Simulate page numbers */
+            /* Page numbers */
             .container {
                 counter-reset: page;
             }
             .section::after {
-                content: counter(page);
+                content: "Page " counter(page);
                 counter-increment: page;
-                position: absolute;
-                bottom: 1cm;
+                position: fixed;
+                bottom: 0.5cm;
                 right: 2cm;
                 font-size: 10pt;
                 color: #666;
             }
+            .cover-page::after, .toc::after {
+                content: none; /* No page numbers on cover or TOC */
+            }
         }
 
-        /* Screen-Specific Styles (for viewing in browser) */
+        /* Screen-Specific Styles */
         @media screen {
             .container {
                 box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -175,6 +193,18 @@
             .toc a:hover {
                 text-decoration: underline;
             }
+            .section {
+                page-break-before: auto; /* Disable page breaks in browser view */
+                page-break-after: auto;
+                min-height: auto; /* Allow flexible height in browser */
+            }
+            .cover-page, .toc {
+                min-height: auto;
+            }
+            .footer {
+                position: static; /* Non-fixed footer in browser */
+                margin-top: 2cm;
+            }
         }
     </style>
 </head>
@@ -182,10 +212,10 @@
     <div class="container">
         <!-- Cover Page -->
         <div class="cover-page">
-            <h1>{{report_title}}</h1>
-            <p>{{subtitle}}</p>
-            <p>{{report_date}}</p>
-            <p>{{organization_name}}</p>
+            <h1>{{ report_title }}</h1>
+            <p>{{ subtitle }}</p>
+            <p>{{ report_date }}</p>
+            <p>{{ organization_name }}</p>
         </div>
 
         <!-- Table of Contents -->
@@ -206,47 +236,47 @@
         <!-- Introduction -->
         <div class="section" id="introduction">
             <h2>1. Introduction</h2>
-            <p>{{introduction_text}}</p>
+            <p>{{ introduction_text }}</p>
         </div>
 
         <!-- Model Overview -->
         <div class="section" id="model-overview">
             <h2>2. Model Overview</h2>
-            <p>{{model_overview_text}}</p>
+            <p>{{ model_overview_text }}</p>
             <ul>
-                <li>{{model_purpose}}</li>
-                <li>{{model_type}}</li>
-                <li>{{model_usage}}</li>
+                <li>{{ model_purpose }}</li>
+                <li>{{ model_type }}</li>
+                <li>{{ model_usage }}</li>
             </ul>
         </div>
 
         <!-- Validation Scope and Objectives -->
         <div class="section" id="validation-scope">
             <h2>3. Validation Scope and Objectives</h2>
-            <p>{{validation_scope_text}}</p>
+            <p>{{ validation_scope_text }}</p>
             <ul>
-                <li>{{objective_1}}</li>
-                <li>{{objective_2}}</li>
-                <li>{{objective_3}}</li>
+                <li>{{ objective_1 }}</li>
+                <li>{{ objective_2 }}</li>
+                <li>{{ objective_3 }}</li>
             </ul>
         </div>
 
         <!-- Validation Methodology -->
         <div class="section" id="methodology">
             <h2>4. Validation Methodology</h2>
-            <p>{{methodology_text}}</p>
+            <p>{{ methodology_text }}</p>
             <p>Key validation activities include:</p>
             <ul>
-                <li>{{activity_1}}</li>
-                <li>{{activity_2}}</li>
-                <li>{{activity_3}}</li>
+                <li>{{ activity_1 }}</li>
+                <li>{{ activity_2 }}</li>
+                <li>{{ activity_3 }}</li>
             </ul>
         </div>
 
         <!-- Validation Findings -->
         <div class="section" id="findings">
             <h2>5. Validation Findings</h2>
-            <p>{{findings_summary}}</p>
+            <p>{{ findings_summary }}</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -258,16 +288,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{finding_1_id}}</td>
-                        <td>{{finding_1_description}}</td>
-                        <td>{{finding_1_severity}}</td>
-                        <td>{{finding_1_status}}</td>
+                        <td>{{ finding_1_id }}</td>
+                        <td>{{ finding_1_description }}</td>
+                        <td>{{ finding_1_severity }}</td>
+                        <td>{{ finding_1_status }}</td>
                     </tr>
                     <tr>
-                        <td>{{finding_2_id}}</td>
-                        <td>{{finding_2_description}}</td>
-                        <td>{{finding_2_severity}}</td>
-                        <td>{{finding_2_status}}</td>
+                        <td>{{ finding_2_id }}</td>
+                        <td>{{ finding_2_description }}</td>
+                        <td>{{ finding_2_severity }}</td>
+                        <td>{{ finding_2_status }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -276,53 +306,33 @@
         <!-- Recommendations -->
         <div class="section" id="recommendations">
             <h2>6. Recommendations</h2>
-            <p>{{recommendations_text}}</p>
+            <p>{{ recommendations_text }}</p>
             <ul>
-                <li>{{recommendation_1}}</li>
-                <li>{{recommendation_2}}</li>
+                <li>{{ recommendation_1 }}</li>
+                <li>{{ recommendation_2 }}</li>
             </ul>
         </div>
 
         <!-- Conclusion -->
         <div class="section" id="conclusion">
             <h2>7. Conclusion</h2>
-            <p>{{conclusion_text}}</p>
+            <p>{{ conclusion_text }}</p>
         </div>
 
         <!-- Appendices -->
         <div class="section" id="appendices">
             <h2>8. Appendices</h2>
-            <p>{{appendices_text}}</p>
+            <p>{{ appendices_text }}</p>
             <ul>
-                <li>{{appendix_1}}</li>
-                <li>{{appendix_2}}</li>
+                <li>{{ appendix_1 }}</li>
+                <li>{{ appendix_2 }}</li>
             </ul>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>{{footer_text}}</p>
+            <p>{{ footer_text }}</p>
         </div>
     </div>
-
-    <script>
-        // Placeholder for JSON data population (to be implemented later)
-        const reportData = {
-            report_title: "Model Risk Management Validation Report",
-            subtitle: "Validation of Financial Forecasting Model",
-            report_date: "May 06, 2025",
-            organization_name: "Example Corp",
-            introduction_text: "This report summarizes the validation process for the financial forecasting model...",
-            // Add other fields as needed
-        };
-
-        // Function to populate template (for demonstration; replace with actual templating engine)
-        function populateTemplate(data) {
-            document.body.innerHTML = document.body.innerHTML.replace(/{{(\w+)}}/g, (match, key) => data[key] || match);
-        }
-
-        // Uncomment to test population
-        // populateTemplate(reportData);
-    </script>
 </body>
 </html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Risk Management Validation Report</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            color: #333;
+            font-size: 12pt;
+        }
+        .container {
+            width: 100%;
+            max-width: 21cm; /* A4 width */
+            margin: 0 auto;
+            padding: 2cm; /* Standard PDF margins */
+            box-sizing: border-box;
+            background: #fff;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            text-align: center;
+            padding: 5cm 0;
+            border-bottom: 2pt solid #003087;
+            page-break-after: always;
+            min-height: 25.7cm; /* Ensure full A4 page */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .cover-page h1 {
+            font-size: 24pt;
+            margin: 0;
+            color: #003087;
+        }
+        .cover-page p {
+            font-size: 14pt;
+            margin: 10pt 0;
+            color: #555;
+        }
+
+        /* Table of Contents */
+        .toc {
+            margin: 2cm 0;
+            page-break-before: always;
+            page-break-after: always;
+            min-height: 25.7cm;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .toc h2 {
+            font-size: 18pt;
+            color: #003087;
+            border-bottom: 1pt solid #ccc;
+            padding-bottom: 8pt;
+            margin-bottom: 12pt;
+        }
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        .toc li {
+            margin: 8pt 0;
+            font-size: 12pt;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #003087;
+        }
+
+        /* Section Styles */
+        .section {
+            margin: 2cm 0;
+            page-break-before: always;
+            page-break-after: always;
+            page-break-inside: avoid;
+            min-height: 25.7cm; /* Ensure each section fills at least one A4 page */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .section h2 {
+            font-size: 16pt;
+            color: #003087;
+            border-bottom: 1pt solid #ccc;
+            padding-bottom: 8pt;
+            margin-bottom: 12pt;
+            page-break-after: avoid;
+        }
+        .section p, .section ul {
+            font-size: 12pt;
+            color: #333;
+            margin: 8pt 0;
+        }
+        .section ul {
+            padding-left: 30pt;
+            list-style-type: disc;
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12pt 0;
+            page-break-inside: auto;
+        }
+        .table th, .table td {
+            border: 1pt solid #999;
+            padding: 8pt;
+            text-align: left;
+            font-size: 11pt;
+        }
+        .table th {
+            background-color: #003087;
+            color: white;
+            font-weight: bold;
+        }
+        .table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        .table tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 1cm;
+            left: 2cm;
+            right: 2cm;
+            text-align: center;
+            padding: 0.5cm 0;
+            font-size: 10pt;
+            color: #666;
+            border-top: 1pt solid #ccc;
+        }
+
+        /* Print-Specific Styles */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 21cm;
+                min-height: 29.7cm; /* A4 height */
+                padding: 2cm;
+                margin: 0;
+                box-shadow: none;
+            }
+            .toc a:hover {
+                text-decoration: none; /* Remove hover for PDF */
+            }
+            .section, .table, .toc, .footer {
+                page-break-inside: avoid;
+            }
+            h2, h3, ul, li {
+                page-break-after: avoid;
+            }
+            /* Page numbers */
+            .container {
+                counter-reset: page;
+            }
+            .section::after {
+                content: "Page " counter(page);
+                counter-increment: page;
+                position: fixed;
+                bottom: 0.5cm;
+                right: 2cm;
+                font-size: 10pt;
+                color: #666;
+            }
+            .cover-page::after, .toc::after {
+                content: none; /* No page numbers on cover or TOC */
+            }
+        }
+
+        /* Screen-Specific Styles */
+        @media screen {
+            .container {
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                margin: 20px auto;
+                background: #fff;
+            }
+            .toc a:hover {
+                text-decoration: underline;
+            }
+            .section {
+                page-break-before: auto; /* Disable page breaks in browser view */
+                page-break-after: auto;
+                min-height: auto; /* Allow flexible height in browser */
+            }
+            .cover-page, .toc {
+                min-height: auto;
+            }
+            .footer {
+                position: static; /* Non-fixed footer in browser */
+                margin-top: 2cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cover Page -->
+        <div class="cover-page">
+            <h1>Model Risk Management Validation Report</h1>
+            <p>Validation of Financial Forecasting Model</p>
+            <p>May 06, 2025</p>
+            <p>Example Corporation</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">1. Introduction</a></li>
+                <li><a href="#model-overview">2. Model Overview</a></li>
+                <li><a href="#validation-scope">3. Validation Scope and Objectives</a></li>
+                <li><a href="#methodology">4. Validation Methodology</a></li>
+                <li><a href="#findings">5. Validation Findings</a></li>
+                <li><a href="#recommendations">6. Recommendations</a></li>
+                <li><a href="#conclusion">7. Conclusion</a></li>
+                <li><a href="#appendices">8. Appendices</a></li>
+            </ul>
+        </div>
+
+        <!-- Introduction -->
+        <div class="section" id="introduction">
+            <h2>1. Introduction</h2>
+            <p>This report provides a comprehensive summary of the validation process for the financial forecasting model, ensuring compliance with regulatory standards and organizational policies.</p>
+        </div>
+
+        <!-- Model Overview -->
+        <div class="section" id="model-overview">
+            <h2>2. Model Overview</h2>
+            <p>The financial forecasting model is designed to predict revenue trends based on historical data and market indicators.</p>
+            <ul>
+                <li>To provide accurate revenue projections for strategic planning.</li>
+                <li>Statistical Time-Series Model</li>
+                <li>Used by the finance department for annual budgeting.</li>
+            </ul>
+        </div>
+
+        <!-- Validation Scope and Objectives -->
+        <div class="section" id="validation-scope">
+            <h2>3. Validation Scope and Objectives</h2>
+            <p>The validation covers the model's conceptual soundness, data integrity, and performance metrics.</p>
+            <ul>
+                <li>Assess model assumptions and limitations.</li>
+                <li>Verify data quality and preprocessing steps.</li>
+                <li>Evaluate predictive accuracy against benchmarks.</li>
+            </ul>
+        </div>
+
+        <!-- Validation Methodology -->
+        <div class="section" id="methodology">
+            <h2>4. Validation Methodology</h2>
+            <p>The validation methodology includes a combination of qualitative reviews and quantitative tests.</p>
+            <p>Key validation activities include:</p>
+            <ul>
+                <li>Review of model documentation and assumptions.</li>
+                <li>Stress testing under various scenarios.</li>
+                <li>Backtesting against historical data.</li>
+            </ul>
+        </div>
+
+        <!-- Validation Findings -->
+        <div class="section" id="findings">
+            <h2>5. Validation Findings</h2>
+            <p>The validation identified minor issues in data preprocessing, but the model performs within acceptable thresholds.</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Finding ID</th>
+                        <th>Description</th>
+                        <th>Severity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>F001</td>
+                        <td>Inconsistent handling of missing data in preprocessing.</td>
+                        <td>Low</td>
+                        <td>Open</td>
+                    </tr>
+                    <tr>
+                        <td>F002</td>
+                        <td>Limited documentation for certain assumptions.</td>
+                        <td>Medium</td>
+                        <td>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="section" id="recommendations">
+            <h2>6. Recommendations</h2>
+            <p>The following recommendations aim to address the identified findings and enhance model reliability.</p>
+            <ul>
+                <li>Implement automated data cleaning protocols.</li>
+                <li>Update model documentation with detailed assumption justifications.</li>
+            </ul>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="section" id="conclusion">
+            <h2>7. Conclusion</h2>
+            <p>The financial forecasting model is fit for purpose, with minor improvements needed to ensure long-term reliability.</p>
+        </div>
+
+        <!-- Appendices -->
+        <div class="section" id="appendices">
+            <h2>8. Appendices</h2>
+            <p>Additional details and supporting documents are provided in the appendices.</p>
+            <ul>
+                <li>Model Documentation</li>
+                <li>Validation Test Results</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Confidential - Example Corporation © 2025</p>
+        </div>
+    </div>
+</body>
+</html>
