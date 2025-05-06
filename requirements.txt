@@ -1,4 +1,5 @@
 pandas
+matplotlib
 groq
 python-dotenv
 requests
