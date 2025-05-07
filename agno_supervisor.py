@@ -3,6 +3,7 @@ from agno.models.groq import Groq
 from agno.models.openrouter import OpenRouter
 from agno.models.mistral import MistralChat
 from agno.models.google import Gemini
+from agno.models.anthropic import Claude
 from agno.team import Team
 import os
 from agno.vectordb.lancedb import LanceDb
@@ -112,8 +113,9 @@ knowledge_agent = Agent(
     name="Knowledge Agent",
     # model=Groq(id="llama-3.3-70b-versatile"),
     # model=MistralChat(id="mistral-large-latest"),
-    model=Gemini(id="gemini-2.0-flash"),
+    # model=Gemini(id="gemini-2.0-flash"),
     # model=OpenRouter(id="gpt-4o"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
     description="You are an expert in looking for answers in the knowledge base.",
     # memory=memory,
     # enable_session_summaries=True,
@@ -158,10 +160,10 @@ supervisor_team = Team(
 )
 
 
-supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the risk factors associated with the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
+supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
 
 
 # supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)

@@ -150,7 +150,7 @@ def read_md_file(file_path: str) -> str:
     
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyBXiMNmOVmrCnOCP-sjGcaPnL1bTfzDI2Y")  
+genai.configure(api_key="api-key")  
 
 gemini_model = genai.GenerativeModel('gemini-1.5-flash')  
 
