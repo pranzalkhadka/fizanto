@@ -54,6 +54,8 @@ def fetch_unread_email():
 
         sender = message["From"]
         subject = message["Subject"]
+        email_id = message["Message-ID"]
+        timestamp = message["Date"]
         body = ""
         attachments = []
 
@@ -79,10 +81,10 @@ def fetch_unread_email():
             body = message.get_payload(decode=True).decode()
 
         mail.logout()
-        return sender, subject, body, attachments
+        return sender, subject, body, email_id, timestamp, attachments
     except Exception as e:
         print("Error fetching email:", e)
-        return None, None, None, []
+        return None, None, None, None, None, []
 
 
 def generate_response(email_body):
@@ -115,15 +117,15 @@ def send_email(to_email, subject, body):
     except Exception as e:
         print("Error sending email:", e)
 
+
 @app.get("/")
 def home():
     return {"Status": "Running"}
 
 
-
 @app.post("/process-email")
 async def process_email():
-    sender, subject, body, attachments = fetch_unread_email()
+    sender, subject, body, email_id, timestamp, attachments = fetch_unread_email()
     if sender and body:
         print(f"New email from: {sender}\nSubject: {subject}\nBody: {body}\nAttachments: {[att['filename'] for att in attachments]}")
 
@@ -144,7 +146,9 @@ async def process_email():
             "saved_files": saved_files,
             "email_body": body,
             "email_subject": subject,
-            "email_sender": sender
+            "email_sender": sender,
+            "email_id": email_id,
+            "email_timestamp": timestamp,
         }
     else:
         return {"status": "failed", "message": "No unread emails."}
