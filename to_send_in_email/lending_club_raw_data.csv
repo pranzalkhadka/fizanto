@@ -1,0 +1,301 @@
+loan_id,loan_amount,term,interest_rate,grade,purpose,home_ownership,annual_income,emp_length,dti,fico_score,total_credit_lines,revolving_balance,revolving_utilization,loan_status
+1,15600.0,36 months,8.4,A,medical,MORTGAGE,31000.0,5 years,17.0,722,14,22600.0,0.48,Fully Paid
+2,38100.0,36 months,10.6,A,debt_consolidation,MORTGAGE,37000.0,4 years,3.6,701,10,9200.0,0.84,Fully Paid
+3,29500.0,36 months,8.5,A,debt_consolidation,RENT,109000.0,2 years,20.5,734,20,42700.0,0.36,Fully Paid
+4,24300.0,36 months,6.8,C,debt_consolidation,RENT,43000.0,8 years,15.6,730,10,44100.0,0.86,Fully Paid
+5,7100.0,60 months,7.4,B,credit_card,RENT,35000.0,4 years,33.9,682,21,23300.0,0.41,Fully Paid
+6,7100.0,60 months,14.2,D,medical,RENT,78000.0,4 years,30.3,671,14,3800.0,0.33,Fully Paid
+7,3300.0,36 months,9.1,D,home_improvement,MORTGAGE,108000.0,3 years,18.2,705,22,19400.0,0.45,Fully Paid
+8,34800.0,36 months,12.3,B,credit_card,MORTGAGE,86000.0,3 years,10.9,777,26,40200.0,0.76,Fully Paid
+9,24400.0,60 months,15.1,A,debt_consolidation,MORTGAGE,99000.0,0 years,49.4,638,22,45100.0,0.13,Fully Paid
+10,28600.0,36 months,18.8,B,other,MORTGAGE,41000.0,6 years,22.7,627,7,10200.0,0.2,Fully Paid
+11,1800.0,36 months,5.8,C,credit_card,MORTGAGE,29000.0,8 years,34.4,708,24,3300.0,0.95,Fully Paid
+12,38800.0,36 months,21.0,A,credit_card,MORTGAGE,127000.0,2 years,7.0,703,25,43900.0,0.18,Fully Paid
+13,33500.0,36 months,17.6,C,debt_consolidation,OWN,51000.0,1 years,24.3,709,29,19500.0,0.57,Fully Paid
+14,9300.0,60 months,6.6,B,major_purchase,RENT,53000.0,2 years,1.4,712,19,27100.0,0.58,Fully Paid
+15,8100.0,60 months,22.5,C,home_improvement,RENT,116000.0,0 years,25.3,689,19,48400.0,0.49,Fully Paid
+16,8200.0,36 months,23.4,B,debt_consolidation,RENT,79000.0,5 years,48.2,774,8,3300.0,0.64,Fully Paid
+17,12900.0,36 months,6.2,A,debt_consolidation,MORTGAGE,75000.0,10+ years,19.2,620,13,32400.0,0.23,Fully Paid
+18,21500.0,36 months,10.5,E,home_improvement,OWN,177000.0,10+ years,1.9,659,30,3700.0,0.55,Fully Paid
+19,17800.0,36 months,21.1,D,home_improvement,RENT,43000.0,6 years,1.5,695,23,18800.0,0.37,Fully Paid
+20,12400.0,36 months,20.0,A,debt_consolidation,OWN,95000.0,10+ years,19.4,618,28,40200.0,0.66,Fully Paid
+21,24900.0,36 months,8.7,D,vacation,RENT,62000.0,10+ years,8.0,691,21,21700.0,0.14,Fully Paid
+22,6400.0,60 months,9.2,B,debt_consolidation,OWN,68000.0,1 years,1.2,783,15,49900.0,0.57,Fully Paid
+23,12400.0,36 months,12.4,D,credit_card,RENT,129000.0,7 years,37.8,701,29,28000.0,0.19,Fully Paid
+24,15300.0,36 months,14.7,D,wedding,RENT,77000.0,5 years,22.9,712,13,16100.0,0.28,Fully Paid
+25,18800.0,60 months,17.4,B,credit_card,MORTGAGE,78000.0,3 years,14.5,637,14,11000.0,0.22,Fully Paid
+26,31600.0,60 months,12.4,A,home_improvement,RENT,102000.0,4 years,45.0,669,22,17500.0,0.18,Fully Paid
+27,8800.0,36 months,14.3,A,debt_consolidation,RENT,50000.0,7 years,5.8,681,24,18600.0,0.83,Fully Paid
+28,21100.0,36 months,19.9,B,debt_consolidation,RENT,39000.0,2 years,47.8,684,17,3400.0,0.29,Fully Paid
+29,24100.0,36 months,5.7,C,other,MORTGAGE,36000.0,2 years,15.7,764,12,18500.0,0.93,Fully Paid
+30,2800.0,36 months,10.0,A,credit_card,MORTGAGE,22000.0,10+ years,44.4,728,11,23200.0,0.97,Fully Paid
+31,24700.0,36 months,19.3,A,small_business,RENT,167000.0,3 years,30.1,644,21,36100.0,0.57,Fully Paid
+32,7700.0,60 months,22.9,D,debt_consolidation,MORTGAGE,34000.0,0 years,41.3,712,25,32800.0,0.14,Default
+33,3500.0,36 months,15.2,G,debt_consolidation,MORTGAGE,54000.0,8 years,49.2,725,27,35400.0,0.37,Default
+34,38000.0,36 months,15.6,B,debt_consolidation,RENT,52000.0,7 years,14.4,757,19,400.0,0.8,Fully Paid
+35,38700.0,36 months,7.1,A,home_improvement,MORTGAGE,70000.0,7 years,48.1,779,24,10900.0,0.37,Fully Paid
+36,32500.0,36 months,13.9,A,debt_consolidation,RENT,90000.0,9 years,19.5,649,19,33100.0,0.09,Fully Paid
+37,12900.0,60 months,15.7,A,small_business,RENT,92000.0,5 years,19.3,659,5,24200.0,0.56,Fully Paid
+38,4800.0,60 months,9.8,E,credit_card,MORTGAGE,45000.0,6 years,17.0,637,29,300.0,0.85,Fully Paid
+39,27700.0,36 months,10.4,A,vacation,RENT,55000.0,5 years,27.1,688,18,40200.0,0.8,Fully Paid
+40,18200.0,36 months,12.5,C,debt_consolidation,MORTGAGE,69000.0,8 years,7.7,723,9,38600.0,0.18,Fully Paid
+41,5800.0,36 months,5.4,A,small_business,MORTGAGE,53000.0,2 years,27.7,749,15,27400.0,0.67,Fully Paid
+42,20300.0,36 months,11.4,C,medical,RENT,134000.0,2 years,27.1,696,20,3300.0,0.22,Fully Paid
+43,2300.0,36 months,9.2,C,medical,MORTGAGE,77000.0,2 years,38.1,684,6,38300.0,0.22,Fully Paid
+44,36500.0,36 months,11.5,D,major_purchase,RENT,86000.0,9 years,41.7,708,12,29200.0,0.87,Default
+45,11100.0,36 months,7.4,A,medical,OWN,83000.0,2 years,22.0,658,15,39100.0,0.25,Fully Paid
+46,26800.0,36 months,22.8,A,home_improvement,MORTGAGE,108000.0,8 years,15.1,804,22,37600.0,0.26,Default
+47,13200.0,36 months,16.9,A,debt_consolidation,MORTGAGE,66000.0,3 years,13.0,620,7,40200.0,0.0,Fully Paid
+48,21300.0,36 months,18.6,E,debt_consolidation,MORTGAGE,31000.0,6 years,9.7,709,30,25900.0,0.87,Fully Paid
+49,22300.0,36 months,20.8,D,wedding,RENT,73000.0,8 years,2.9,801,5,7000.0,0.79,Fully Paid
+50,8200.0,36 months,15.0,C,home_improvement,MORTGAGE,43000.0,10+ years,17.1,700,15,33600.0,0.63,Fully Paid
+51,38800.0,36 months,6.7,C,major_purchase,OWN,46000.0,6 years,13.5,690,20,31000.0,0.75,Fully Paid
+52,31200.0,60 months,15.7,C,credit_card,MORTGAGE,80000.0,8 years,48.3,682,22,37100.0,0.15,Fully Paid
+53,37600.0,36 months,16.7,A,debt_consolidation,MORTGAGE,111000.0,2 years,27.9,691,20,8500.0,0.46,Fully Paid
+54,35900.0,36 months,19.9,E,debt_consolidation,OWN,61000.0,3 years,17.4,769,27,9700.0,0.35,Default
+55,24300.0,36 months,13.6,B,home_improvement,RENT,70000.0,7 years,29.0,589,14,44500.0,0.09,Fully Paid
+56,37000.0,36 months,7.6,B,credit_card,RENT,140000.0,5 years,7.0,777,22,37500.0,0.49,Fully Paid
+57,4500.0,36 months,10.7,B,debt_consolidation,MORTGAGE,68000.0,4 years,22.2,629,10,45400.0,0.92,Fully Paid
+58,8600.0,36 months,12.3,A,credit_card,MORTGAGE,220000.0,3 years,31.3,687,23,37900.0,0.04,Fully Paid
+59,2800.0,60 months,17.9,A,debt_consolidation,MORTGAGE,79000.0,7 years,24.4,679,8,29900.0,0.29,Fully Paid
+60,13700.0,36 months,16.4,C,credit_card,OWN,25000.0,0 years,20.1,729,17,32700.0,0.21,Fully Paid
+61,16200.0,36 months,12.1,A,debt_consolidation,RENT,87000.0,8 years,49.7,620,28,44500.0,0.24,Fully Paid
+62,11600.0,36 months,24.7,C,major_purchase,RENT,72000.0,0 years,44.0,723,18,28900.0,0.91,Fully Paid
+63,33300.0,36 months,17.1,A,debt_consolidation,MORTGAGE,114000.0,7 years,31.2,801,7,31600.0,0.47,Fully Paid
+64,14900.0,36 months,9.7,B,credit_card,RENT,84000.0,3 years,28.5,632,14,7800.0,0.47,Fully Paid
+65,12000.0,60 months,7.0,A,debt_consolidation,MORTGAGE,56000.0,8 years,31.0,709,10,23700.0,0.76,Fully Paid
+66,22200.0,36 months,8.1,B,debt_consolidation,MORTGAGE,32000.0,10+ years,10.1,667,5,35800.0,0.15,Default
+67,6500.0,60 months,9.9,C,debt_consolidation,MORTGAGE,54000.0,4 years,19.8,721,27,13500.0,0.49,Fully Paid
+68,32300.0,60 months,8.2,A,credit_card,RENT,39000.0,2 years,2.0,701,28,10100.0,0.43,Fully Paid
+69,3900.0,36 months,8.7,C,home_improvement,MORTGAGE,45000.0,8 years,23.8,668,18,15700.0,0.6,Fully Paid
+70,39500.0,36 months,10.7,B,debt_consolidation,MORTGAGE,80000.0,10+ years,27.2,724,12,12100.0,1.0,Fully Paid
+71,31100.0,36 months,8.5,C,home_improvement,MORTGAGE,138000.0,8 years,11.4,790,23,10700.0,0.77,Default
+72,8700.0,36 months,22.9,E,small_business,RENT,73000.0,3 years,48.2,690,18,21200.0,0.4,Fully Paid
+73,1200.0,36 months,6.6,C,medical,MORTGAGE,33000.0,10+ years,45.5,736,14,45400.0,0.83,Fully Paid
+74,32800.0,36 months,15.5,A,debt_consolidation,OWN,75000.0,3 years,36.1,635,21,25400.0,0.17,Fully Paid
+75,28600.0,36 months,13.2,A,credit_card,RENT,109000.0,7 years,26.7,652,13,9400.0,0.03,Fully Paid
+76,29400.0,36 months,24.6,A,debt_consolidation,RENT,44000.0,1 years,43.5,724,10,3800.0,0.2,Fully Paid
+77,31100.0,60 months,7.2,C,debt_consolidation,RENT,56000.0,8 years,6.5,774,15,34800.0,0.34,Fully Paid
+78,3900.0,36 months,13.0,A,other,MORTGAGE,60000.0,5 years,39.5,718,29,19100.0,0.51,Fully Paid
+79,15000.0,60 months,24.4,B,debt_consolidation,MORTGAGE,40000.0,8 years,6.2,684,11,41100.0,0.62,Fully Paid
+80,5500.0,36 months,22.3,C,credit_card,MORTGAGE,83000.0,7 years,39.7,700,21,33000.0,0.91,Default
+81,34700.0,36 months,21.3,B,home_improvement,RENT,56000.0,6 years,13.8,637,5,39800.0,0.51,Fully Paid
+82,25300.0,36 months,10.2,D,medical,RENT,74000.0,0 years,43.9,730,26,13600.0,0.5,Fully Paid
+83,13900.0,36 months,8.4,A,credit_card,MORTGAGE,38000.0,2 years,47.2,744,9,34600.0,0.05,Default
+84,3500.0,60 months,18.4,A,debt_consolidation,MORTGAGE,48000.0,10+ years,7.4,677,13,13200.0,0.03,Fully Paid
+85,13100.0,60 months,23.6,C,debt_consolidation,OWN,86000.0,1 years,23.1,676,22,47000.0,0.55,Default
+86,13700.0,60 months,16.1,B,credit_card,RENT,50000.0,4 years,49.0,713,28,31800.0,0.44,Fully Paid
+87,29500.0,36 months,16.4,C,debt_consolidation,MORTGAGE,142000.0,4 years,24.2,678,25,16200.0,0.84,Fully Paid
+88,25900.0,36 months,10.6,B,debt_consolidation,MORTGAGE,49000.0,4 years,43.2,697,6,13500.0,0.16,Default
+89,35600.0,60 months,20.4,A,debt_consolidation,MORTGAGE,67000.0,3 years,29.4,805,30,9500.0,0.02,Fully Paid
+90,19400.0,60 months,8.7,D,debt_consolidation,MORTGAGE,95000.0,4 years,18.8,688,15,34700.0,0.45,Fully Paid
+91,5700.0,60 months,11.5,D,debt_consolidation,MORTGAGE,29000.0,2 years,14.3,682,10,10900.0,0.24,Fully Paid
+92,28800.0,36 months,13.5,C,debt_consolidation,OWN,25000.0,0 years,10.2,668,30,29800.0,0.05,Fully Paid
+93,30700.0,36 months,15.2,A,credit_card,RENT,28000.0,4 years,38.1,737,12,13200.0,0.72,Fully Paid
+94,22900.0,60 months,9.8,C,home_improvement,RENT,113000.0,8 years,19.3,691,8,33100.0,0.11,Fully Paid
+95,31100.0,36 months,7.3,B,major_purchase,MORTGAGE,45000.0,8 years,25.6,668,22,40700.0,0.61,Fully Paid
+96,20300.0,60 months,17.2,A,debt_consolidation,MORTGAGE,215000.0,3 years,24.6,766,15,38900.0,0.28,Fully Paid
+97,21400.0,60 months,10.8,E,debt_consolidation,RENT,45000.0,2 years,28.9,771,9,38000.0,0.17,Default
+98,17700.0,36 months,16.6,A,debt_consolidation,RENT,66000.0,0 years,43.3,670,19,9400.0,0.38,Fully Paid
+99,2000.0,60 months,8.1,F,home_improvement,RENT,129000.0,1 years,49.0,607,22,4400.0,0.8,Default
+100,5200.0,60 months,14.6,B,medical,OWN,163000.0,7 years,20.4,750,6,34900.0,0.39,Fully Paid
+101,2200.0,36 months,15.7,A,debt_consolidation,RENT,168000.0,0 years,41.4,666,26,18400.0,0.75,Fully Paid
+102,25800.0,60 months,6.0,B,wedding,RENT,110000.0,7 years,38.2,740,15,21600.0,0.13,Fully Paid
+103,13300.0,36 months,11.7,D,debt_consolidation,RENT,100000.0,6 years,28.7,601,30,1600.0,0.77,Default
+104,20800.0,60 months,7.7,C,credit_card,RENT,81000.0,7 years,47.8,745,29,13000.0,0.24,Fully Paid
+105,36400.0,36 months,6.3,D,medical,RENT,88000.0,5 years,10.0,639,17,1700.0,0.68,Fully Paid
+106,10700.0,60 months,24.8,C,small_business,MORTGAGE,45000.0,8 years,5.5,737,8,44000.0,0.57,Fully Paid
+107,17000.0,36 months,11.4,C,medical,RENT,40000.0,2 years,42.7,701,26,12200.0,0.93,Default
+108,30500.0,36 months,21.2,D,major_purchase,MORTGAGE,60000.0,9 years,22.0,652,11,27900.0,0.39,Fully Paid
+109,9900.0,60 months,10.1,A,debt_consolidation,RENT,55000.0,3 years,42.3,680,15,1900.0,0.07,Fully Paid
+110,4000.0,36 months,18.6,B,major_purchase,MORTGAGE,48000.0,5 years,44.7,734,26,33300.0,0.02,Fully Paid
+111,12300.0,36 months,20.2,A,debt_consolidation,OWN,85000.0,7 years,3.1,705,28,16200.0,0.83,Fully Paid
+112,7300.0,60 months,16.9,G,small_business,MORTGAGE,97000.0,4 years,44.2,729,8,44900.0,0.52,Default
+113,37300.0,60 months,14.4,E,credit_card,MORTGAGE,63000.0,2 years,22.4,799,19,44400.0,0.78,Fully Paid
+114,32500.0,36 months,13.2,A,major_purchase,RENT,125000.0,5 years,25.5,622,5,16300.0,0.23,Fully Paid
+115,25700.0,36 months,12.0,C,credit_card,RENT,34000.0,3 years,31.3,781,27,45000.0,0.35,Fully Paid
+116,35000.0,36 months,23.6,E,home_improvement,MORTGAGE,54000.0,8 years,46.3,705,7,49800.0,0.03,Default
+117,32300.0,36 months,21.6,A,credit_card,OWN,42000.0,2 years,1.0,655,18,41300.0,0.96,Fully Paid
+118,8300.0,36 months,24.3,C,medical,MORTGAGE,24000.0,3 years,23.8,633,10,42200.0,0.67,Fully Paid
+119,35800.0,36 months,7.5,E,debt_consolidation,MORTGAGE,57000.0,6 years,34.4,691,22,12500.0,0.93,Fully Paid
+120,22000.0,60 months,19.6,A,debt_consolidation,MORTGAGE,56000.0,6 years,36.1,746,29,28800.0,0.27,Fully Paid
+121,32500.0,60 months,23.8,C,debt_consolidation,MORTGAGE,128000.0,3 years,34.6,694,5,3400.0,0.61,Fully Paid
+122,35900.0,60 months,8.6,A,debt_consolidation,RENT,82000.0,5 years,6.7,776,10,4700.0,0.68,Fully Paid
+123,13400.0,36 months,6.3,E,small_business,MORTGAGE,36000.0,2 years,15.0,627,10,49900.0,0.32,Fully Paid
+124,5300.0,36 months,19.8,F,debt_consolidation,OWN,151000.0,5 years,17.9,699,25,16300.0,0.85,Default
+125,9900.0,36 months,16.5,E,vacation,RENT,110000.0,1 years,40.2,637,20,37400.0,0.95,Default
+126,17700.0,36 months,21.8,B,debt_consolidation,MORTGAGE,80000.0,7 years,13.9,718,9,40300.0,0.88,Fully Paid
+127,32900.0,36 months,7.8,D,debt_consolidation,RENT,53000.0,1 years,10.5,744,21,42900.0,0.74,Fully Paid
+128,34600.0,60 months,20.9,D,major_purchase,MORTGAGE,37000.0,10+ years,47.9,679,14,49900.0,0.28,Fully Paid
+129,1300.0,36 months,9.0,B,home_improvement,RENT,50000.0,6 years,0.4,580,25,12100.0,0.28,Fully Paid
+130,20900.0,36 months,8.3,D,credit_card,MORTGAGE,103000.0,8 years,49.9,710,22,2000.0,0.96,Default
+131,17300.0,36 months,8.3,A,credit_card,MORTGAGE,154000.0,0 years,33.8,722,11,20600.0,0.01,Fully Paid
+132,9700.0,60 months,21.3,C,medical,RENT,130000.0,7 years,41.4,720,7,6500.0,0.72,Fully Paid
+133,5700.0,36 months,18.3,A,debt_consolidation,MORTGAGE,47000.0,6 years,14.7,762,17,1100.0,0.71,Fully Paid
+134,14200.0,36 months,15.5,A,other,MORTGAGE,34000.0,5 years,0.7,646,19,18000.0,0.62,Fully Paid
+135,37800.0,36 months,12.2,A,vacation,OWN,64000.0,5 years,36.9,734,24,39200.0,0.99,Fully Paid
+136,13600.0,60 months,22.5,C,home_improvement,RENT,25000.0,5 years,41.7,760,23,28300.0,0.31,Fully Paid
+137,21200.0,36 months,12.8,B,debt_consolidation,RENT,70000.0,8 years,37.0,611,7,15600.0,0.34,Fully Paid
+138,28400.0,60 months,21.3,C,home_improvement,RENT,56000.0,1 years,7.1,716,8,32700.0,0.08,Fully Paid
+139,15200.0,60 months,13.8,A,debt_consolidation,OWN,47000.0,0 years,37.7,675,9,11600.0,0.44,Fully Paid
+140,38900.0,36 months,12.5,B,debt_consolidation,OWN,27000.0,5 years,38.4,696,5,700.0,0.26,Fully Paid
+141,38500.0,36 months,14.3,B,debt_consolidation,MORTGAGE,77000.0,9 years,32.9,717,8,38200.0,0.34,Fully Paid
+142,10800.0,60 months,11.0,D,credit_card,MORTGAGE,46000.0,10+ years,38.3,676,16,31200.0,0.83,Default
+143,20400.0,36 months,20.0,B,small_business,MORTGAGE,33000.0,7 years,42.3,666,28,38100.0,0.94,Fully Paid
+144,12700.0,36 months,15.1,C,medical,MORTGAGE,20000.0,2 years,30.7,702,14,1900.0,0.19,Fully Paid
+145,12100.0,60 months,9.6,D,medical,RENT,59000.0,9 years,4.4,646,27,41900.0,0.37,Fully Paid
+146,2400.0,60 months,23.0,C,credit_card,MORTGAGE,145000.0,0 years,24.4,646,29,31000.0,0.93,Fully Paid
+147,24800.0,60 months,12.7,A,debt_consolidation,RENT,137000.0,8 years,3.9,734,25,28200.0,0.06,Fully Paid
+148,20600.0,60 months,15.9,A,debt_consolidation,MORTGAGE,48000.0,0 years,20.4,643,30,31200.0,0.09,Fully Paid
+149,3000.0,36 months,23.1,D,other,MORTGAGE,44000.0,2 years,20.4,733,24,43200.0,0.16,Fully Paid
+150,11900.0,36 months,17.5,A,debt_consolidation,MORTGAGE,76000.0,7 years,3.3,723,28,29300.0,0.6,Fully Paid
+151,36400.0,60 months,7.3,D,small_business,RENT,36000.0,2 years,17.4,614,29,29000.0,0.15,Fully Paid
+152,10300.0,36 months,23.8,B,credit_card,RENT,70000.0,3 years,5.5,666,17,49500.0,0.97,Fully Paid
+153,6700.0,36 months,17.6,E,credit_card,RENT,88000.0,7 years,40.4,760,27,37800.0,0.45,Default
+154,20100.0,60 months,11.7,D,medical,RENT,111000.0,0 years,47.4,651,18,22100.0,0.5,Fully Paid
+155,39400.0,36 months,7.8,G,credit_card,RENT,57000.0,5 years,3.6,677,27,35400.0,0.25,Default
+156,10400.0,36 months,20.9,B,small_business,OWN,54000.0,0 years,47.8,723,9,19500.0,0.47,Fully Paid
+157,27200.0,36 months,17.4,D,wedding,MORTGAGE,39000.0,0 years,26.1,739,8,11400.0,0.66,Fully Paid
+158,30700.0,36 months,15.7,B,credit_card,RENT,40000.0,7 years,15.0,687,18,29800.0,0.75,Fully Paid
+159,10300.0,36 months,22.9,B,debt_consolidation,RENT,53000.0,10+ years,3.8,670,14,46400.0,0.75,Fully Paid
+160,29400.0,36 months,20.8,C,credit_card,MORTGAGE,72000.0,3 years,25.0,771,21,46500.0,0.58,Fully Paid
+161,15300.0,36 months,8.0,D,wedding,MORTGAGE,95000.0,0 years,39.7,787,14,17100.0,0.9,Fully Paid
+162,25700.0,36 months,11.2,G,debt_consolidation,MORTGAGE,40000.0,9 years,35.4,749,30,26400.0,0.82,Default
+163,25700.0,60 months,10.0,D,home_improvement,OWN,126000.0,6 years,2.5,704,11,10600.0,0.76,Fully Paid
+164,21900.0,36 months,19.9,B,home_improvement,MORTGAGE,52000.0,4 years,3.6,660,20,49800.0,0.06,Fully Paid
+165,4500.0,60 months,5.7,B,medical,OWN,59000.0,4 years,20.1,658,5,49100.0,0.01,Fully Paid
+166,33600.0,36 months,16.4,C,debt_consolidation,OWN,41000.0,0 years,14.8,726,21,32500.0,0.21,Fully Paid
+167,13500.0,36 months,20.2,A,medical,RENT,20000.0,9 years,11.6,721,25,40200.0,0.66,Fully Paid
+168,8300.0,60 months,22.5,A,wedding,OWN,93000.0,10+ years,14.1,770,13,35800.0,0.41,Fully Paid
+169,2600.0,36 months,11.8,B,debt_consolidation,RENT,87000.0,5 years,40.2,733,10,29700.0,0.4,Fully Paid
+170,24000.0,60 months,21.4,A,debt_consolidation,MORTGAGE,52000.0,8 years,46.5,625,23,2700.0,0.88,Fully Paid
+171,27400.0,36 months,7.2,A,vacation,RENT,62000.0,8 years,20.3,753,17,22700.0,0.9,Fully Paid
+172,1600.0,60 months,21.9,A,debt_consolidation,OWN,77000.0,7 years,45.3,650,7,33700.0,0.91,Fully Paid
+173,21000.0,36 months,7.5,A,small_business,OWN,27000.0,4 years,16.1,681,11,33900.0,0.31,Fully Paid
+174,9800.0,60 months,12.9,A,credit_card,MORTGAGE,46000.0,0 years,23.8,713,26,18700.0,0.69,Fully Paid
+175,26200.0,36 months,20.9,G,debt_consolidation,MORTGAGE,89000.0,8 years,11.3,800,13,47100.0,0.27,Fully Paid
+176,7800.0,60 months,8.0,B,small_business,RENT,32000.0,0 years,32.0,850,26,8400.0,0.19,Default
+177,27900.0,36 months,9.6,B,credit_card,RENT,69000.0,7 years,48.9,730,9,25000.0,0.18,Fully Paid
+178,16100.0,36 months,19.4,C,credit_card,MORTGAGE,30000.0,4 years,30.2,691,14,34500.0,0.34,Default
+179,37500.0,60 months,19.4,A,debt_consolidation,RENT,76000.0,2 years,17.9,727,27,34900.0,0.43,Fully Paid
+180,6400.0,36 months,17.8,E,credit_card,MORTGAGE,59000.0,10+ years,32.4,744,21,32400.0,0.83,Fully Paid
+181,14300.0,36 months,18.9,D,debt_consolidation,RENT,27000.0,6 years,6.1,684,16,13800.0,0.12,Fully Paid
+182,5400.0,36 months,15.9,A,debt_consolidation,OWN,107000.0,6 years,44.4,790,27,7800.0,0.73,Fully Paid
+183,37100.0,36 months,10.0,B,vacation,MORTGAGE,41000.0,8 years,25.2,712,20,31800.0,0.53,Fully Paid
+184,35200.0,36 months,11.9,D,debt_consolidation,MORTGAGE,40000.0,6 years,22.5,725,7,30000.0,0.29,Fully Paid
+185,11100.0,36 months,8.6,E,home_improvement,RENT,66000.0,10+ years,29.3,733,29,9000.0,0.49,Fully Paid
+186,26700.0,60 months,23.2,B,debt_consolidation,OWN,106000.0,2 years,31.2,721,26,35300.0,0.3,Fully Paid
+187,32900.0,36 months,16.7,C,medical,OWN,36000.0,10+ years,3.6,742,13,22800.0,0.6,Fully Paid
+188,22700.0,36 months,13.0,A,debt_consolidation,MORTGAGE,62000.0,0 years,34.1,669,19,33400.0,0.43,Fully Paid
+189,21700.0,60 months,14.2,G,vacation,MORTGAGE,74000.0,7 years,12.1,672,9,41900.0,0.16,Fully Paid
+190,10400.0,60 months,23.9,A,credit_card,MORTGAGE,85000.0,2 years,35.7,645,27,8500.0,0.12,Fully Paid
+191,4600.0,36 months,8.1,E,debt_consolidation,RENT,65000.0,7 years,41.1,722,17,1000.0,0.55,Default
+192,36000.0,36 months,16.7,C,debt_consolidation,MORTGAGE,50000.0,7 years,40.2,739,18,39000.0,0.9,Fully Paid
+193,36100.0,36 months,15.1,C,debt_consolidation,RENT,40000.0,4 years,27.6,723,24,30500.0,0.34,Fully Paid
+194,25700.0,36 months,17.2,B,credit_card,RENT,63000.0,0 years,26.0,784,19,35000.0,0.73,Fully Paid
+195,14200.0,36 months,5.4,A,debt_consolidation,RENT,35000.0,9 years,7.1,700,20,41900.0,0.66,Fully Paid
+196,14600.0,36 months,22.4,A,major_purchase,RENT,20000.0,6 years,38.8,733,27,40100.0,0.93,Fully Paid
+197,29300.0,36 months,23.6,A,credit_card,RENT,74000.0,9 years,13.6,645,17,48000.0,0.82,Fully Paid
+198,36000.0,36 months,16.3,A,debt_consolidation,RENT,94000.0,4 years,24.8,681,21,26800.0,0.57,Fully Paid
+199,35600.0,60 months,18.9,D,home_improvement,OWN,20000.0,7 years,14.2,735,27,24400.0,0.66,Fully Paid
+200,31400.0,60 months,23.4,B,medical,MORTGAGE,36000.0,8 years,6.7,742,12,20100.0,0.9,Fully Paid
+201,26000.0,36 months,19.1,A,debt_consolidation,OWN,82000.0,10+ years,31.5,685,25,7700.0,0.4,Fully Paid
+202,4300.0,36 months,8.1,F,debt_consolidation,MORTGAGE,168000.0,6 years,2.7,696,6,28600.0,0.33,Default
+203,7300.0,36 months,16.5,D,debt_consolidation,RENT,60000.0,6 years,37.4,624,9,13900.0,0.01,Fully Paid
+204,36000.0,60 months,17.1,E,medical,MORTGAGE,42000.0,0 years,15.9,682,10,46100.0,0.83,Fully Paid
+205,24700.0,36 months,13.5,G,home_improvement,MORTGAGE,55000.0,3 years,0.0,745,16,29200.0,0.8,Default
+206,1400.0,36 months,19.7,A,credit_card,RENT,119000.0,1 years,25.6,729,22,29600.0,0.1,Fully Paid
+207,5000.0,60 months,23.7,B,major_purchase,MORTGAGE,43000.0,1 years,2.3,725,26,17700.0,0.58,Fully Paid
+208,26900.0,60 months,23.5,D,major_purchase,RENT,40000.0,1 years,13.8,702,26,2600.0,0.46,Fully Paid
+209,1200.0,60 months,14.0,C,credit_card,MORTGAGE,47000.0,3 years,35.3,700,5,1600.0,0.12,Fully Paid
+210,7300.0,60 months,7.3,A,small_business,MORTGAGE,37000.0,0 years,3.1,667,21,21200.0,0.98,Fully Paid
+211,22400.0,36 months,24.7,D,debt_consolidation,RENT,64000.0,3 years,42.0,735,15,4200.0,0.21,Fully Paid
+212,28000.0,36 months,21.8,A,debt_consolidation,RENT,135000.0,1 years,0.2,721,14,30300.0,0.07,Fully Paid
+213,26400.0,60 months,7.5,A,debt_consolidation,MORTGAGE,70000.0,4 years,12.3,725,23,44000.0,0.59,Fully Paid
+214,9700.0,60 months,23.4,B,debt_consolidation,MORTGAGE,53000.0,2 years,37.0,674,18,44100.0,0.74,Fully Paid
+215,28800.0,36 months,22.4,C,credit_card,RENT,52000.0,7 years,15.8,592,30,33000.0,0.03,Fully Paid
+216,10300.0,36 months,15.4,C,wedding,OWN,27000.0,3 years,5.1,755,14,10600.0,0.66,Fully Paid
+217,13700.0,36 months,16.8,A,debt_consolidation,RENT,93000.0,0 years,18.0,676,19,43100.0,0.53,Default
+218,30100.0,60 months,13.0,D,debt_consolidation,MORTGAGE,58000.0,0 years,13.5,657,23,44300.0,0.1,Default
+219,26300.0,60 months,6.1,A,credit_card,OWN,55000.0,9 years,42.1,735,8,9800.0,0.17,Fully Paid
+220,34100.0,36 months,11.7,A,wedding,RENT,296000.0,2 years,15.7,680,6,36900.0,0.57,Fully Paid
+221,26600.0,36 months,21.1,D,debt_consolidation,RENT,70000.0,8 years,39.4,753,13,14300.0,0.3,Fully Paid
+222,23200.0,36 months,5.1,F,credit_card,RENT,41000.0,6 years,44.6,731,14,40100.0,0.94,Default
+223,4700.0,60 months,11.7,D,debt_consolidation,RENT,48000.0,1 years,21.7,734,15,49900.0,0.82,Fully Paid
+224,15300.0,60 months,13.0,D,debt_consolidation,RENT,106000.0,8 years,45.5,632,18,1500.0,0.98,Default
+225,11300.0,60 months,15.7,C,other,MORTGAGE,63000.0,9 years,18.9,761,11,44900.0,0.26,Fully Paid
+226,10500.0,36 months,23.4,C,vacation,RENT,29000.0,1 years,48.2,713,27,31100.0,0.97,Fully Paid
+227,38900.0,36 months,11.9,A,debt_consolidation,MORTGAGE,95000.0,2 years,4.5,682,19,48700.0,0.43,Fully Paid
+228,16300.0,36 months,11.9,B,vacation,OWN,43000.0,10+ years,34.4,707,26,23300.0,0.35,Default
+229,35800.0,36 months,19.8,B,home_improvement,MORTGAGE,153000.0,9 years,24.7,611,23,42400.0,0.05,Fully Paid
+230,25600.0,60 months,14.0,A,small_business,MORTGAGE,103000.0,1 years,19.4,720,26,3100.0,0.05,Fully Paid
+231,32000.0,60 months,9.5,C,credit_card,RENT,48000.0,2 years,31.6,649,19,16800.0,0.69,Fully Paid
+232,20600.0,60 months,14.0,B,credit_card,MORTGAGE,114000.0,5 years,35.2,632,28,3400.0,0.46,Fully Paid
+233,23500.0,60 months,7.8,A,credit_card,MORTGAGE,62000.0,8 years,0.2,624,12,48800.0,0.23,Fully Paid
+234,20200.0,36 months,8.5,A,home_improvement,MORTGAGE,92000.0,8 years,8.3,756,15,40800.0,0.61,Fully Paid
+235,8600.0,60 months,15.0,C,debt_consolidation,RENT,76000.0,6 years,35.7,669,13,42600.0,0.25,Fully Paid
+236,29200.0,60 months,13.4,A,debt_consolidation,OWN,39000.0,2 years,33.3,777,19,46900.0,0.58,Fully Paid
+237,12000.0,60 months,23.3,D,debt_consolidation,MORTGAGE,43000.0,3 years,48.3,673,5,4300.0,0.36,Fully Paid
+238,1900.0,36 months,12.2,B,medical,RENT,100000.0,5 years,38.1,615,5,19300.0,0.82,Fully Paid
+239,26200.0,36 months,16.6,B,debt_consolidation,RENT,51000.0,10+ years,47.5,644,23,3600.0,0.82,Fully Paid
+240,7900.0,36 months,17.6,C,home_improvement,MORTGAGE,49000.0,4 years,35.1,762,7,10500.0,0.48,Fully Paid
+241,37700.0,60 months,5.3,D,vacation,MORTGAGE,37000.0,1 years,14.9,692,14,11500.0,0.35,Fully Paid
+242,38200.0,36 months,18.3,B,debt_consolidation,MORTGAGE,74000.0,5 years,5.3,673,12,23500.0,0.36,Fully Paid
+243,36700.0,36 months,8.6,C,home_improvement,MORTGAGE,168000.0,2 years,39.1,708,19,13400.0,0.81,Fully Paid
+244,15400.0,36 months,24.2,C,credit_card,RENT,35000.0,7 years,32.2,725,14,5000.0,0.33,Fully Paid
+245,1600.0,36 months,8.0,A,small_business,MORTGAGE,61000.0,1 years,2.4,756,5,8400.0,0.21,Fully Paid
+246,37200.0,36 months,13.3,D,debt_consolidation,MORTGAGE,121000.0,0 years,18.0,772,22,7400.0,0.08,Fully Paid
+247,17700.0,36 months,6.7,D,home_improvement,RENT,58000.0,8 years,47.8,682,6,48700.0,0.47,Fully Paid
+248,38700.0,36 months,24.9,C,major_purchase,RENT,75000.0,2 years,25.0,634,23,38000.0,0.48,Fully Paid
+249,38600.0,36 months,15.0,D,wedding,MORTGAGE,35000.0,10+ years,21.6,679,17,48400.0,0.84,Fully Paid
+250,34300.0,60 months,16.9,D,home_improvement,RENT,74000.0,0 years,22.9,713,26,22000.0,0.22,Default
+251,12500.0,36 months,6.3,C,credit_card,MORTGAGE,55000.0,6 years,10.4,652,5,13900.0,0.38,Fully Paid
+252,16000.0,60 months,20.0,D,home_improvement,RENT,98000.0,9 years,18.4,652,6,39900.0,0.81,Fully Paid
+253,34200.0,36 months,9.2,C,small_business,RENT,108000.0,4 years,18.5,717,20,16300.0,0.82,Fully Paid
+254,13400.0,36 months,23.0,C,credit_card,RENT,219000.0,4 years,2.6,698,19,15000.0,0.38,Fully Paid
+255,7600.0,60 months,9.1,C,debt_consolidation,OWN,80000.0,0 years,38.4,702,17,11600.0,0.46,Fully Paid
+256,22700.0,36 months,8.8,D,wedding,MORTGAGE,70000.0,8 years,20.8,662,20,6500.0,0.3,Default
+257,37500.0,36 months,5.7,A,home_improvement,OWN,66000.0,6 years,41.1,688,21,12800.0,0.93,Fully Paid
+258,28100.0,36 months,14.4,D,home_improvement,MORTGAGE,50000.0,7 years,42.5,654,25,17800.0,0.12,Fully Paid
+259,23200.0,60 months,16.3,D,debt_consolidation,RENT,71000.0,8 years,10.6,745,11,33700.0,0.93,Fully Paid
+260,4800.0,36 months,6.3,A,home_improvement,MORTGAGE,52000.0,5 years,32.9,752,28,3100.0,0.68,Fully Paid
+261,25000.0,60 months,20.5,D,debt_consolidation,MORTGAGE,65000.0,4 years,23.6,608,30,10500.0,0.53,Fully Paid
+262,39600.0,36 months,14.1,A,home_improvement,MORTGAGE,116000.0,5 years,44.0,654,21,40500.0,0.03,Fully Paid
+263,6500.0,36 months,15.5,B,debt_consolidation,RENT,36000.0,10+ years,10.8,625,11,7300.0,0.48,Fully Paid
+264,21200.0,36 months,13.8,C,home_improvement,MORTGAGE,106000.0,1 years,33.9,667,17,17100.0,0.41,Fully Paid
+265,35200.0,36 months,13.0,A,other,RENT,116000.0,3 years,30.4,696,9,43200.0,0.16,Fully Paid
+266,29900.0,36 months,16.2,D,debt_consolidation,RENT,56000.0,2 years,14.8,628,30,7700.0,0.66,Fully Paid
+267,28200.0,36 months,8.1,D,vacation,MORTGAGE,21000.0,6 years,6.8,654,21,4100.0,0.97,Default
+268,28400.0,36 months,8.6,B,credit_card,MORTGAGE,44000.0,8 years,32.6,650,7,24200.0,0.56,Fully Paid
+269,15000.0,60 months,22.2,A,small_business,RENT,115000.0,4 years,36.9,710,11,15100.0,0.71,Fully Paid
+270,12500.0,36 months,23.9,A,major_purchase,RENT,59000.0,5 years,15.8,703,30,28200.0,0.07,Fully Paid
+271,32600.0,36 months,12.5,C,credit_card,MORTGAGE,36000.0,9 years,32.2,664,21,40200.0,0.42,Default
+272,32600.0,60 months,10.4,G,medical,MORTGAGE,47000.0,1 years,19.8,709,11,6900.0,0.12,Default
+273,34800.0,36 months,17.9,C,small_business,OWN,91000.0,2 years,35.7,673,25,29000.0,0.61,Fully Paid
+274,36600.0,36 months,13.2,A,credit_card,OWN,79000.0,2 years,10.0,686,5,25300.0,0.94,Fully Paid
+275,20900.0,60 months,5.5,C,debt_consolidation,MORTGAGE,53000.0,8 years,44.5,784,21,7200.0,0.66,Fully Paid
+276,20600.0,60 months,8.1,B,home_improvement,RENT,50000.0,6 years,14.4,767,21,31200.0,0.08,Default
+277,32100.0,36 months,19.3,D,major_purchase,MORTGAGE,49000.0,7 years,18.4,635,15,13700.0,0.35,Fully Paid
+278,26300.0,60 months,18.2,A,medical,MORTGAGE,38000.0,10+ years,2.9,741,29,24400.0,0.55,Fully Paid
+279,28400.0,36 months,5.5,D,major_purchase,RENT,134000.0,9 years,5.6,741,7,4100.0,0.4,Fully Paid
+280,32000.0,36 months,9.4,B,credit_card,MORTGAGE,51000.0,10+ years,25.8,643,19,23000.0,0.83,Fully Paid
+281,35700.0,36 months,9.6,F,major_purchase,RENT,110000.0,8 years,13.4,741,25,15300.0,0.81,Fully Paid
+282,14200.0,60 months,18.4,B,debt_consolidation,OWN,128000.0,5 years,41.8,777,15,41100.0,0.61,Fully Paid
+283,15600.0,36 months,5.4,C,credit_card,MORTGAGE,99000.0,3 years,0.7,644,30,2800.0,0.37,Fully Paid
+284,4700.0,36 months,7.1,E,debt_consolidation,MORTGAGE,48000.0,0 years,19.0,654,20,20900.0,0.26,Fully Paid
+285,23600.0,36 months,21.0,A,debt_consolidation,MORTGAGE,73000.0,7 years,16.9,751,29,22900.0,0.11,Fully Paid
+286,2400.0,36 months,8.6,E,debt_consolidation,OWN,59000.0,6 years,1.0,714,26,36300.0,0.35,Fully Paid
+287,19200.0,36 months,18.1,C,debt_consolidation,MORTGAGE,38000.0,1 years,6.2,728,13,28700.0,0.41,Fully Paid
+288,22200.0,36 months,9.8,A,home_improvement,MORTGAGE,70000.0,7 years,20.7,717,28,33400.0,0.68,Fully Paid
+289,12200.0,36 months,7.0,B,debt_consolidation,RENT,33000.0,4 years,24.6,720,28,38900.0,0.66,Fully Paid
+290,24000.0,36 months,9.9,C,credit_card,MORTGAGE,108000.0,6 years,20.2,634,5,43100.0,0.07,Default
+291,2200.0,36 months,19.4,A,debt_consolidation,RENT,47000.0,3 years,26.5,752,29,15700.0,0.4,Fully Paid
+292,2500.0,36 months,22.1,C,debt_consolidation,MORTGAGE,66000.0,4 years,29.8,758,26,26900.0,0.18,Fully Paid
+293,33100.0,36 months,21.6,B,debt_consolidation,MORTGAGE,69000.0,7 years,0.5,689,20,42000.0,0.16,Fully Paid
+294,15000.0,36 months,12.9,C,debt_consolidation,MORTGAGE,53000.0,0 years,23.2,698,13,49500.0,0.83,Fully Paid
+295,6000.0,60 months,18.4,A,home_improvement,RENT,80000.0,0 years,48.2,623,23,44500.0,0.04,Fully Paid
+296,21400.0,36 months,9.1,D,home_improvement,RENT,47000.0,3 years,26.0,726,16,18600.0,0.42,Fully Paid
+297,31000.0,36 months,10.9,F,home_improvement,MORTGAGE,93000.0,2 years,33.9,729,23,9800.0,0.17,Default
+298,9400.0,36 months,22.9,F,credit_card,RENT,31000.0,9 years,15.6,697,26,24500.0,0.88,Fully Paid
+299,25300.0,36 months,5.3,C,debt_consolidation,RENT,64000.0,1 years,38.7,756,13,37100.0,0.56,Fully Paid
+300,4300.0,36 months,6.7,A,small_business,RENT,158000.0,2 years,38.6,683,11,24600.0,0.23,Fully Paid

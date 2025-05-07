@@ -7,3 +7,4 @@ agno
 fastembed
 lancedb
 mcp
+google-generativeai

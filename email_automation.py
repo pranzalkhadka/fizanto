@@ -131,7 +131,7 @@ async def process_email():
 
         saved_files = []
         for att in attachments:
-            if att["filename"].lower().endswith('.csv'):
+            if att["filename"].lower().endswith(('.csv', '.md')):
                 file_path = os.path.join(ATTACHMENT_DIR, att["filename"])
                 with open(file_path, "wb") as f:
                     f.write(att["data"])

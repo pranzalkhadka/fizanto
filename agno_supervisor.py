@@ -1,6 +1,8 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
 from agno.models.openrouter import OpenRouter
+from agno.models.mistral import MistralChat
+from agno.models.google import Gemini
 from agno.team import Team
 import os
 from agno.vectordb.lancedb import LanceDb
@@ -96,7 +98,7 @@ def send_email():
 
 email_agent = Agent(
     name="Send Email",
-    # description="You are an expert in sending emails.",
+    # description="Your only responsibility is sending emails.",
     # model=OpenRouter(id="gpt-4o"),
     model=Groq(id="llama-3.3-70b-versatile"),
     tools=[send_email],
@@ -108,7 +110,9 @@ email_agent = Agent(
 
 knowledge_agent = Agent(
     name="Knowledge Agent",
-    model=Groq(id="llama-3.3-70b-versatile"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    # model=MistralChat(id="mistral-large-latest"),
+    model=Gemini(id="gemini-2.0-flash"),
     # model=OpenRouter(id="gpt-4o"),
     description="You are an expert in looking for answers in the knowledge base.",
     # memory=memory,
@@ -140,40 +144,27 @@ supervisor_team = Team(
     # model=OpenRouter(id="gpt-4o"),
     memory=memory,
     enable_session_summaries=True,
-    model=Groq(id="llama-3.3-70b-versatile"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    # model=MistralChat(id="mistral-large-latest"),
+    model=Gemini(id="gemini-2.0-flash"),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
-        "Route to the Email Agent only for sending emails.",
+        "Route to the Email Agent only for sending emails. Not for email inquiries.",
         "Route to Knowledge Agent for rest of the questions."
     ],
     show_tool_calls=True,
     markdown=True
 )
 
-# try:
-#     # supervisor_team.print_response("What is the file lending_club_raw_data about?")
-#     supervisor_team.print_response("Did you receive my email about Lending Club Risk Management artifacts?")
-#     # supervisor_team.print_response("What is in the email attachment?")
-#     # supervisor_team.print_response("What is the file data_sample_metadata about?")
-#     # supervisor_team.print_response("Hello, how are you?", stream=True)
-#     # supervisor_team.print_response("What is the file medicine about?")
-#     # supervisor_team.print_response("What are lending_club_raw_data.csv and data_sample_metadata.md about?")
-#     # supervisor_team.print_response("What time is it?")
-#     # supervisor_team.print_response("")
-#     # supervisor_team.print_response("Send me an email")
-#     print(knowledge_agent.memory)
-#     pprint([m.model_dump(include={"role", "content"}) for m in knowledge_agent.memory.messages])
-# except Exception as e:
-#     print(f"Error: {e}")
+
+supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What are the risk factors associated with the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
 
 
-
-# supervisor_team.print_response("Did you receive my email about Lending Club Risk Management artifacts?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("What is the file data_sample_metadata about?", session_id=session_id)
-# supervisor_team.print_response("What is the file lending_club_raw_data about?", session_id=session_id)
-# supervisor_team.print_response("Send me an email", user_id=user_id, session_id=session_id)
-supervisor_team.print_response("Can you give summary of the data analysis?", user_id=user_id, session_id=session_id)
-
-# session_summary = memory.get_session_summary(
-#     user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What are the key assumptions mentioned that we should be particularly aware of?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("How would you classify the risk level of the model?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What input features are used?", user_id=user_id, session_id=session_id)

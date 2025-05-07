@@ -59,9 +59,7 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
     Requirements:
     1. Import pandas as pd.
     2. Load the CSV using pd.read_csv('{csv_path}', encoding='utf-8').
-    3. Perform data analysis based on the prompt, including:
-       - Summary statistics for numeric columns
-       - Value counts for at least one categorical column
+    3. Perform data analysis based on the prompt.
     4. Print the analysis results as plain text using print().
     6. Return only valid Python code with correct indentation and complete syntax. Do not include comments, explanations, markdown, backticks, or incomplete statements.
     8. Ensure all print statements have closing parentheses.
@@ -105,9 +103,9 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
         raise Exception(f"Failed to generate code: {str(e)}")
 
 def generate_human_readable_summary(metadata: dict, analysis_output: str) -> str:
-    system_prompt = "You are an expert who can summarize data analysis results in plain English."
+    system_prompt = "You are an expert who can describe data analysis results in plain English in a detailed manner."
     user_prompt = f"""
-    Given the following CSV metadata and raw analysis output, create a detailed summary of the key insights. First explain what the data is about, then summarize the key findings.
+    Given the following CSV metadata and raw analysis output, create a detailed description of the key insights.
 
     Metadata:
     - Columns: {metadata['columns']}
@@ -141,6 +139,28 @@ def analyze_csv(csv_path: str, user_prompt: str) -> str:
         return summary
     except Exception as e:
         return f"Error analyzing CSV: {str(e)}"
+    
+    
+def read_md_file(file_path: str) -> str:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except Exception as e:
+        return f"Failed to read Markdown file: {str(e)}"
+    
+import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyBXiMNmOVmrCnOCP-sjGcaPnL1bTfzDI2Y")  
+
+gemini_model = genai.GenerativeModel('gemini-1.5-flash')  
+
+def summarize_md_file(md_content: str) -> str:
+    try:
+        prompt = f"Summarize this in a detailed manner: {md_content}"
+        response = gemini_model.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        return f"Failed to summarize Markdown file: {str(e)}"
 
 def main():
     try:
@@ -153,32 +173,53 @@ def main():
             return
         saved_files = data.get("saved_files", [])
         if not saved_files:
-            print("No CSV attachments found.")
+            print("No attachments found.")
             return
-        for csv_path in saved_files:
-            csv_path = os.path.join(ATTACHMENT_DIR, os.path.basename(csv_path))
-            if not os.path.exists(csv_path):
-                print(f"File {csv_path} not found.")
-                continue
-            summary = analyze_csv(csv_path, "Give a simple analytics of this csv file")
-            csv_filename = os.path.basename(csv_path)
-            output_file = os.path.join(OUTPUT_DIR, f"analysis_summary_{csv_filename.replace('.csv', '')}.txt")
-            with open(output_file, "w") as f:
-                f.write(summary)
-            print(f"Analysis summary saved to {output_file}")
 
+        csv_files = []
+        md_files = []
+
+        for file_path in saved_files:
+            file_path = os.path.join(ATTACHMENT_DIR, os.path.basename(file_path))
+            if not os.path.exists(file_path):
+                print(f"File {file_path} not found.")
+                continue
+            file_name = os.path.basename(file_path)
+            if file_path.lower().endswith('.csv'):
+                summary = analyze_csv(file_path, "Give a highly detailed analytics of this csv file")
+                output_file = os.path.join(OUTPUT_DIR, f"analysis_summary_{file_name.replace('.csv', '')}.txt")
+                with open(output_file, "w") as f:
+                    f.write(summary)
+                # print(f"Analysis summary saved to {output_file}")
+                csv_files.append({"name": file_name, "summary": summary})
+            elif file_path.lower().endswith('.md'):
+                md_content = read_md_file(file_path)
+                # print(f"Markdown file {file_path} content:\n{md_content}")
+                md_summary = summarize_md_file(md_content)
+                # print(f"Markdown summary for {file_path}:\n{md_summary}")
+                md_files.append({"name": file_name, "summary": md_summary})
+            else:
+                print(f"Skipping unsupported file: {file_path}")
+
+        if csv_files or md_files:
             email_metadata_message = (
                 f"Received an email from {data['email_sender']} at {data['email_timestamp']} "
                 f"with subject {data['email_subject']} and body {data['email_body']} "
                 f"identified as {data['email_id']}. "
-                f"The email had an attachment named {csv_filename}. "
-                f"Its analytics summary is {summary}."
+                f"There were {len(csv_files)} CSV files and {len(md_files)} Markdown files. "
             )
-
+            for csv in csv_files:
+                email_metadata_message += f"The detailed analytics of {csv['name']} is {csv['summary']}. "
+            for md in md_files:
+                email_metadata_message += f"The {md['name']} contains {md['summary']}. "
             knowledge_base.load_text(email_metadata_message)
+            # print(f"Stored metadata: {email_metadata_message}")
 
     except Exception as e:
-        print(f"Error processing email or CSV: {str(e)}")
+        print(f"Error processing email or files: {str(e)}")
+
+    except Exception as e:
+        print(f"Error processing email or files: {str(e)}")
 
 if __name__ == "__main__":
     main()
