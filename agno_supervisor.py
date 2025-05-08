@@ -169,7 +169,7 @@ def run_analysis(user_prompt: str) -> str:
 knowledge_agent = Agent(
     name="Knowledge Agent",
     # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Claude(id="claude-3-7-sonnet-20250219", api_key="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"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
     tools=[run_analysis],
     knowledge=knowledge_base,
     search_knowledge=True,
@@ -186,7 +186,7 @@ knowledge_agent = Agent(
 #     # model=MistralChat(id="mistral-large-latest"),
 #     # model=Gemini(id="gemini-2.0-flash"),
 #     # model=OpenRouter(id="gpt-4o"),
-#     model=Claude(id="claude-3-7-sonnet-20250219", api_key="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"),
+#     model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
 #     description="You are an expert in looking for answers in the knowledge base.",
 #     # memory=memory,
 #     # enable_session_summaries=True,
@@ -207,7 +207,7 @@ supervisor_team = Team(
     enable_session_summaries=True,
     # model=Groq(id="llama-3.3-70b-versatile"),
     # model=MistralChat(id="mistral-large-latest"),
-    model=Gemini(id="gemini-2.0-flash", api_key="AIzaSyBXiMNmOVmrCnOCP-sjGcaPnL1bTfzDI2Y"),
+    model=Gemini(id="gemini-2.0-flash", api_key="api-key"),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
