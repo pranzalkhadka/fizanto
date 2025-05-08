@@ -6,6 +6,8 @@ from groq import Groq
 from io import StringIO
 import sys
 import requests
+import anthropic
+
 
 
 from dotenv import load_dotenv
@@ -30,7 +32,19 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 ATTACHMENT_DIR = "/app/attachments"
 OUTPUT_DIR = "/app/output"
 
-client = Groq(api_key=GROQ_API_KEY)
+client_groq = Groq(api_key=GROQ_API_KEY)
+
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+
+import google.generativeai as genai
+
+google_api_key = os.getenv("GEMINI_API_KEY")
+
+genai.configure(api_key=google_api_key)  
+
+gemini_model = genai.GenerativeModel('gemini-1.5-flash')  
 
 def get_csv_metadata(file_path: str) -> dict:
     try:
@@ -47,7 +61,7 @@ def get_csv_metadata(file_path: str) -> dict:
 def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> str:
     system_prompt = "You are a data analyst that generates valid Python code for pandas data analysis."
     analysis_prompt = f"""
-    Given the following CSV metadata and user prompt, generate Python code to analyze the data.
+    Given the following CSV metadata and user prompt, generate Python code to analyze the data using only pandas.
 
     Metadata:
     - Columns: {metadata['columns']}
@@ -74,14 +88,23 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
     print(df.select_dtypes(include=['object']).iloc[:, 0].value_counts().to_string())
     """
     try:
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+        # response = client.chat.completions.create(
+        #     model="llama-3.3-70b-versatile",
+        #     messages=[
+        #         {"role": "system", "content": system_prompt},
+        #         {"role": "user", "content": analysis_prompt},
+        #     ]
+        # )
+        # code = response.choices[0].message.content.strip()
+        response = client.messages.create(
+            model="claude-3-7-sonnet-20250219",
+            max_tokens=4000,
+            system=system_prompt,
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": analysis_prompt},
+                {"role": "user", "content": analysis_prompt}
             ]
         )
-        code = response.choices[0].message.content.strip()
+        code = response.content[0].text.strip()
         # Clean the response to remove markdown and explanatory text
         code_lines = code.split('\n')
         cleaned_code = []
@@ -102,29 +125,32 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
     except Exception as e:
         raise Exception(f"Failed to generate code: {str(e)}")
 
-def generate_human_readable_summary(metadata: dict, analysis_output: str) -> str:
-    system_prompt = "You are an expert who can describe data analysis results in plain English in a detailed manner."
-    user_prompt = f"""
-    Given the following CSV metadata and raw analysis output, create a detailed description of the key insights.
+def generate_human_readable_summary(analysis_output: str) -> str:
 
-    Metadata:
-    - Columns: {metadata['columns']}
-    - Shape: {metadata['shape']}
 
-    Raw Analysis Output:
-    {analysis_output}
-    """
-    try:
-        response = client.chat.completions.create(
-            model="llama3-70b-8192",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ]
-        )
-        return response.choices[0].message.content.strip()
-    except Exception as e:
-        raise Exception(f"Failed to generate summary: {str(e)}")
+    prompt = f"Summarize this in a detailed manner: {analysis_output}"
+    response = gemini_model.generate_content(prompt)
+    return response.text.strip()
+    
+
+    # system_prompt = "You are an expert who can describe data analysis results in plain English in a detailed manner."
+    # user_prompt = f"""
+    # Given the following raw analysis output, create a detailed summary of the key insights.
+
+    # Raw Analysis Output:
+    # {analysis_output}
+    # """
+    # try:
+    #     response = client_groq.chat.completions.create(
+    #         model="gemma2-9b-it",
+    #         messages=[
+    #             {"role": "system", "content": system_prompt},
+    #             {"role": "user", "content": user_prompt},
+    #         ]
+    #     )
+    #     return response.choices[0].message.content.strip()
+    # except Exception as e:
+    #     raise Exception(f"Failed to generate summary: {str(e)}")
 
 def analyze_csv(csv_path: str, user_prompt: str) -> str:
     try:
@@ -135,7 +161,7 @@ def analyze_csv(csv_path: str, user_prompt: str) -> str:
         exec(analysis_code)
         sys.stdout = old_stdout
         analysis_output = mystdout.getvalue()
-        summary = generate_human_readable_summary(metadata, analysis_output)
+        summary = generate_human_readable_summary(analysis_output)
         return summary
     except Exception as e:
         return f"Error analyzing CSV: {str(e)}"
@@ -148,11 +174,6 @@ def read_md_file(file_path: str) -> str:
     except Exception as e:
         return f"Failed to read Markdown file: {str(e)}"
     
-import google.generativeai as genai
-
-genai.configure(api_key="api-key")  
-
-gemini_model = genai.GenerativeModel('gemini-1.5-flash')  
 
 def summarize_md_file(md_content: str) -> str:
     try:
@@ -164,7 +185,9 @@ def summarize_md_file(md_content: str) -> str:
 
 def main():
     try:
-        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        # analysis_prompt = os.getenv(
+        #     "ANALYSIS_PROMPT", 
+        # )
         response = requests.post("http://host.docker.internal:8000/process-email")
         response.raise_for_status()
         data = response.json()
@@ -186,17 +209,11 @@ def main():
                 continue
             file_name = os.path.basename(file_path)
             if file_path.lower().endswith('.csv'):
-                summary = analyze_csv(file_path, "Give a highly detailed analytics of this csv file")
-                output_file = os.path.join(OUTPUT_DIR, f"analysis_summary_{file_name.replace('.csv', '')}.txt")
-                with open(output_file, "w") as f:
-                    f.write(summary)
-                # print(f"Analysis summary saved to {output_file}")
+                summary = analyze_csv(file_path, "Give a detailed pandas data analytics of this csv file")
                 csv_files.append({"name": file_name, "summary": summary})
-            elif file_path.lower().endswith('.md'):
+            if file_path.lower().endswith('.md'):
                 md_content = read_md_file(file_path)
-                # print(f"Markdown file {file_path} content:\n{md_content}")
                 md_summary = summarize_md_file(md_content)
-                # print(f"Markdown summary for {file_path}:\n{md_summary}")
                 md_files.append({"name": file_name, "summary": md_summary})
             else:
                 print(f"Skipping unsupported file: {file_path}")
@@ -213,7 +230,6 @@ def main():
             for md in md_files:
                 email_metadata_message += f"The {md['name']} contains {md['summary']}. "
             knowledge_base.load_text(email_metadata_message)
-            # print(f"Stored metadata: {email_metadata_message}")
 
     except Exception as e:
         print(f"Error processing email or files: {str(e)}")

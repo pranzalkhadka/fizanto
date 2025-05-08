@@ -6,6 +6,6 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main_viz.py .
+COPY initial_image.py .
 
-CMD ["python", "main_viz.py"]
+CMD ["python", "initial_image.py"]

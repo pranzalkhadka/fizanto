@@ -1,5 +1,6 @@
 pandas
 matplotlib
+seaborn
 groq
 anthropic
 python-dotenv

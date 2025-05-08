@@ -1,7 +1,6 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
 from agno.models.openrouter import OpenRouter
-from agno.models.mistral import MistralChat
 from agno.models.google import Gemini
 from agno.models.anthropic import Claude
 from agno.team import Team
@@ -108,24 +107,6 @@ email_agent = Agent(
     markdown=True
 )
 
-
-knowledge_agent = Agent(
-    name="Knowledge Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    # model=MistralChat(id="mistral-large-latest"),
-    # model=Gemini(id="gemini-2.0-flash"),
-    # model=OpenRouter(id="gpt-4o"),
-    model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
-    description="You are an expert in looking for answers in the knowledge base.",
-    # memory=memory,
-    # enable_session_summaries=True,
-    knowledge=knowledge_base,
-    search_knowledge=True,
-    instructions=["Always look for answers in the knowledge base.", "If you don't find an answer, say 'No relevant information found'."],
-    show_tool_calls=True,
-    markdown=True
-)
-
 greeting_agent = Agent(
     name="Greeting Agent",
     description="You are an expert in conversational responses, acting like a human colleague.",
@@ -139,6 +120,84 @@ greeting_agent = Agent(
     markdown=True
 )
 
+import subprocess
+
+
+@tool(
+    name="run_analysis",
+    description="Run analysis to retrieve answer for the user query",
+    show_result=True,
+    stop_after_tool_call=True,
+    cache_results=False
+)
+def run_analysis(user_prompt: str) -> str:
+    """
+    Use this function to retreive answer for the user query.
+    """
+    try:
+        docker_command = [
+            "docker", "run", "--rm",
+            "--add-host=host.docker.internal:host-gateway",
+            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
+            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
+            "-e", f"ANALYSIS_PROMPT={user_prompt}",
+            "analysis-service"
+        ]
+        result = subprocess.run(
+            docker_command,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout or "No analysis output generated."
+    except subprocess.CalledProcessError as e:
+        return f"Failed to run Docker analysis: {e.stderr}"
+    except Exception as e:
+        return f"Error running Docker analysis: {str(e)}"
+
+    
+# knowledge_agent = Agent(
+#     name="Knowledge Agent",
+#     model=Groq(id="llama-3.3-70b-versatile"),
+#     tools=[run_analysis],
+#     instructions=["Call the run_analysis tool to get answer for the user's question",],
+#     show_tool_calls=True,
+#     markdown=True
+# )
+
+
+knowledge_agent = Agent(
+    name="Knowledge Agent",
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key="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"),
+    tools=[run_analysis],
+    knowledge=knowledge_base,
+    search_knowledge=True,
+    instructions=["First search the knowledge base for answer.", 
+                  "If no relevant answer is found in the knowledge base, call the run_analysis tool to get the answer"],
+    show_tool_calls=True,
+    markdown=True
+)
+
+
+# knowledge_agent = Agent(
+#     name="Knowledge Agent",
+#     # model=Groq(id="llama-3.3-70b-versatile"),
+#     # model=MistralChat(id="mistral-large-latest"),
+#     # model=Gemini(id="gemini-2.0-flash"),
+#     # model=OpenRouter(id="gpt-4o"),
+#     model=Claude(id="claude-3-7-sonnet-20250219", api_key="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"),
+#     description="You are an expert in looking for answers in the knowledge base.",
+#     # memory=memory,
+#     # enable_session_summaries=True,
+#     knowledge=knowledge_base,
+#     search_knowledge=True,
+#     instructions=["Always look for answers in the knowledge base.", "If you don't find an answer, say 'No relevant information found'."],
+#     show_tool_calls=True,
+#     markdown=True
+# )
+
+
 supervisor_team = Team(
     name="Supervisor Team",
     mode="route",
@@ -148,7 +207,7 @@ supervisor_team = Team(
     enable_session_summaries=True,
     # model=Groq(id="llama-3.3-70b-versatile"),
     # model=MistralChat(id="mistral-large-latest"),
-    model=Gemini(id="gemini-2.0-flash"),
+    model=Gemini(id="gemini-2.0-flash", api_key="AIzaSyBXiMNmOVmrCnOCP-sjGcaPnL1bTfzDI2Y"),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
@@ -163,10 +222,6 @@ supervisor_team = Team(
 # supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the risk factors associated with the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
-supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
-
-
-# supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("What are the key assumptions mentioned that we should be particularly aware of?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("How would you classify the risk level of the model?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("What input features are used?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("Could you show me the validation performance metrics? It'd be helpful to see some visualizations of the model's performance.", user_id=user_id, session_id=session_id)
+supervisor_team.print_response("What is the average annual income?", user_id=user_id, session_id=session_id)

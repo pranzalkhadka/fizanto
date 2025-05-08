@@ -43,13 +43,36 @@ def generate_visualization_code(metadata: dict, csv_path: str, output_path: str)
     Requirements:
     1. Import pandas as pd and matplotlib.pyplot as plt.
     2. Load the CSV using pd.read_csv('{csv_path}', encoding='utf-8').
-     3. Create visualizations:
-       - For numeric columns (float64, int64), generate histograms.
-       - For categorical columns (object), generate bar plots of value counts.
-    4. Save the plot to '{output_path}' using plt.savefig().
-    5. Do not call plt.show().
-    6. Return only valid Python code with correct indentation and complete syntax. Do not include comments, explanations, markdown, backticks, or incomplete statements.
-    7. Ensure the plot is clear with titles, labels, and legends where applicable.
+    3. For numeric columns, generate histograms.
+    4. For categorical columns, generate bar plots of value counts.
+    5. Save the plots to '{output_path}' using plt.savefig().
+    6. Do not call plt.show().
+    7. Return only valid Python code with correct indentation and complete syntax. Do not include comments, explanations, markdown, backticks, or incomplete statements.
+    8. Ensure the plot is clear with titles, labels, and legends where applicable.
+    9. Ensure all print statements have closing parentheses and there are no extra parentheses.
+
+    Example Code:
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    df = pd.read_csv('{csv_path}', encoding='utf-8')
+    numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
+    categorical_cols = df.select_dtypes(include=['object']).columns
+    plt.figure(figsize=(10, 6))
+    for i, col in enumerate(numeric_cols, 1):
+        plt.subplot(len(numeric_cols), 1, i)
+        plt.hist(df[col], bins=30, edgecolor='black')
+        plt.title(f'Histogram of col')
+        plt.xlabel(col)
+        plt.ylabel('Frequency')
+    plt.tight_layout()
+    if len(categorical_cols) > 0:
+        plt.figure(figsize=(10, 6))
+        df[categorical_cols[0]].value_counts().plot(kind='bar')
+        plt.title(f'Bar Plot of categorical_cols[0]')
+        plt.xlabel(categorical_cols[0])
+        plt.ylabel('Count')
+    plt.savefig('{output_path}')
+    plt.close()
     """
     try:
         response = client.messages.create(
@@ -89,7 +112,7 @@ def generate_md_visualization_code(md_content: str, md_path: str, output_path: s
 
     Requirements:
     1. Import matplotlib.pyplot as plt.
-    2. Analyze the markdown Content and then identify and create useful visual plots.
+    2. Analyze the Markdown Content properly and create plots that represent the Markdown Content information visually.
     3. Save the plot to '{output_path}' using plt.savefig().
     4. Do not call plt.show().
     5. Return only valid Python code with correct indentation and complete syntax. Do not include comments, explanations, markdown, backticks, or incomplete statements.
