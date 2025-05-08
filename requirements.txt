@@ -1,6 +1,7 @@
 pandas
 matplotlib
 groq
+anthropic
 python-dotenv
 requests
 agno
