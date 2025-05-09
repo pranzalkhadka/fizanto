@@ -1,0 +1,9 @@
+botbuilder-core
+fastapi[all]
+aiohttp
+agno
+docker
+groq
+lancedb
+fastembed
+sqlalchemy

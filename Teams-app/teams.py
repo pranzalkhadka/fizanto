@@ -18,13 +18,13 @@ from agno.tools import tool
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from agno.models.google import Gemini
+# from agno.models.google import Gemini
 
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 APP_ID = os.getenv('APP_ID')
 APP_PASSWORD = os.getenv('APP_PASSWORD')
 
@@ -144,8 +144,8 @@ greeting_agent = Agent(
     markdown=True
 )
 
-import subprocess
-
+import docker
+from docker.errors import DockerException, ImageNotFound, APIError
 
 @tool(
     name="run_analysis",
@@ -156,59 +156,98 @@ import subprocess
 )
 def run_analysis(user_prompt: str) -> str:
     """
-    Use this function to retreive answer for the user query.
+    Use this function to retrieve answer for the user query.
     """
     try:
-        docker_command = [
-            "docker", "run", "--rm",
-            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
-            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
-            "-e", f"ANALYSIS_PROMPT={user_prompt}",
-            "analysis-service"
-        ]
-        result = subprocess.run(
-            docker_command,
-            capture_output=True,
-            text=True,
-            check=True
+        # Initialize Docker client
+        client = docker.from_env()
+
+        # Image name (use registry-hosted image for portability, e.g., Docker Hub)
+        image_name = "pranjalkhadka/fizanto:analysis-service"  # Replace with your registry path
+
+        # Pull the image if not already present
+        try:
+            client.images.get(image_name)
+        except ImageNotFound:
+            client.images.pull(image_name)
+
+        # Run the container
+        container = client.containers.run(
+            image=image_name,
+            command=None,  # Use the default command defined in the Dockerfile
+            volumes={
+                "/home/pranjal/Downloads/fizanto/attachments": {"bind": "/app/attachments", "mode": "rw"},
+                "/home/pranjal/Downloads/fizanto/.env": {"bind": "/app/.env", "mode": "ro"}
+            },
+            environment=[f"ANALYSIS_PROMPT={user_prompt}"],
+            remove=True,  # Equivalent to --rm
+            detach=False  # Wait for the container to finish
         )
-        return result.stdout or "No analysis output generated."
-    except subprocess.CalledProcessError as e:
-        return f"Failed to run Docker analysis: {e.stderr}"
-    except Exception as e:
+
+        # Container output is returned as bytes; decode to string
+        output = container.decode("utf-8") if container else "No analysis output generated."
+        return output
+
+    except ImageNotFound:
+        return f"Failed to find Docker image: {image_name}"
+    except APIError as e:
+        return f"Failed to run Docker analysis: {str(e)}"
+    except DockerException as e:
         return f"Error running Docker analysis: {str(e)}"
+    except Exception as e:
+        return f"Unexpected error: {str(e)}"
+
 
 @tool(
     name="retrieve_filepath",
-    description="Retrieve file path of the plot",
+    description="Retrieve file path of the visualization",
     show_result=True,
     stop_after_tool_call=True,
     cache_results=False
 )
 def retrieve_filepath(user_prompt: str) -> str:
     """
-    Use this function to retrieve file path of the plot.
+    Use this function to retrieve file path of the visualization.
     """
     try:
-        docker_command = [
-            "docker", "run", "--rm",
-            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
-            "-v", "/home/pranjal/Downloads/fizanto/output:/app/output",
-            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
-            "-e", f"VISUALIZATION_PROMPT={user_prompt}",
-            "vis-service"
-        ]
-        result = subprocess.run(
-            docker_command,
-            capture_output=True,
-            text=True,
-            check=True
+        # Initialize Docker client
+        client = docker.from_env()
+
+        # Image name (use registry-hosted image for portability, e.g., Docker Hub)
+        image_name = "pranjalkhadka/fizanto:vis-service"  # Replace with your registry path
+
+        # Pull the image if not already present
+        try:
+            client.images.get(image_name)
+        except ImageNotFound:
+            client.images.pull(image_name)
+
+        # Run the container
+        container = client.containers.run(
+            image=image_name,
+            command=None,  # Use the default command defined in the Dockerfile
+            volumes={
+                "/home/pranjal/Downloads/fizanto/attachments": {"bind": "/app/attachments", "mode": "rw"},
+                "/home/pranjal/Downloads/fizanto/output": {"bind": "/app/output", "mode": "rw"},
+                "/home/pranjal/Downloads/fizanto/.env": {"bind": "/app/.env", "mode": "ro"}
+            },
+            environment=[f"VISUALIZATION_PROMPT={user_prompt}"],
+            remove=True,  # Equivalent to --rm
+            detach=False  # Wait for the container to finish
         )
-        return result.stdout or "No plots generated."
-    except subprocess.CalledProcessError as e:
-        return f"Failed to run Docker visualization: {e.stderr}"
-    except Exception as e:
+
+        # Container output is returned as bytes; decode to string
+        output = container.decode("utf-8") if container else "No visualizations generated."
+        return output
+
+    except ImageNotFound:
+        return f"Failed to find Docker image: {image_name}"
+    except APIError as e:
+        return f"Failed to run Docker visualization: {str(e)}"
+    except DockerException as e:
         return f"Error running Docker visualization: {str(e)}"
+    except Exception as e:
+        return f"Unexpected error: {str(e)}"
 
 
 knowledge_agent = Agent(
@@ -233,7 +272,8 @@ supervisor_team = Team(
     members=[email_agent, knowledge_agent, greeting_agent],
     memory=memory,
     enable_session_summaries=True,
-    model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    model=Groq(id="llama-3.3-70b-versatile"),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
@@ -284,8 +324,3 @@ async def messages(request: Request):
         raise HTTPException(status_code=400, detail="Invalid JSON in request body")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
