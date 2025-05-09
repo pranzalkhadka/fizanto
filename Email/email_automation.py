@@ -40,7 +40,7 @@ def fetch_unread_email():
         mail.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         mail.select("inbox")
 
-        _, data = mail.search(None, 'SEEN')
+        _, data = mail.search(None, 'ALL')
         email_ids = data[0].split()
 
         if not email_ids:
@@ -88,7 +88,7 @@ def fetch_unread_email():
 
 
 def generate_response(email_body):
-    reply = """Hi Pranjal,
+    reply = """Hi Bikram,
 
 I've received your files. I will analyze them shortly.
 

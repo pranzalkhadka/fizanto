@@ -6,11 +6,10 @@ from groq import Groq
 from io import StringIO
 import sys
 import requests
-import anthropic
+# import anthropic
 
 
 
-from dotenv import load_dotenv
 from agno.vectordb.lancedb import LanceDb
 from agno.embedder.fastembed import FastEmbedEmbedder
 from typing import List, Dict, Optional, Tuple
@@ -34,8 +33,8 @@ OUTPUT_DIR = "/app/output"
 
 client_groq = Groq(api_key=GROQ_API_KEY)
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+# ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+# client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 
 import google.generativeai as genai
@@ -88,23 +87,23 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
     print(df.select_dtypes(include=['object']).iloc[:, 0].value_counts().to_string())
     """
     try:
-        # response = client.chat.completions.create(
-        #     model="llama-3.3-70b-versatile",
-        #     messages=[
-        #         {"role": "system", "content": system_prompt},
-        #         {"role": "user", "content": analysis_prompt},
-        #     ]
-        # )
-        # code = response.choices[0].message.content.strip()
-        response = client.messages.create(
-            model="claude-3-7-sonnet-20250219",
-            max_tokens=4000,
-            system=system_prompt,
+        response = client_groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "user", "content": analysis_prompt}
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": analysis_prompt},
             ]
         )
-        code = response.content[0].text.strip()
+        code = response.choices[0].message.content.strip()
+        # response = client.messages.create(
+        #     model="claude-3-7-sonnet-20250219",
+        #     max_tokens=4000,
+        #     system=system_prompt,
+        #     messages=[
+        #         {"role": "user", "content": analysis_prompt}
+        #     ]
+        # )
+        # code = response.content[0].text.strip()
         # Clean the response to remove markdown and explanatory text
         code_lines = code.split('\n')
         cleaned_code = []
@@ -126,7 +125,6 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
         raise Exception(f"Failed to generate code: {str(e)}")
 
 def generate_human_readable_summary(analysis_output: str) -> str:
-
 
     prompt = f"Summarize this in a detailed manner: {analysis_output}"
     response = gemini_model.generate_content(prompt)
@@ -185,10 +183,8 @@ def summarize_md_file(md_content: str) -> str:
 
 def main():
     try:
-        # analysis_prompt = os.getenv(
-        #     "ANALYSIS_PROMPT", 
-        # )
-        response = requests.post("http://host.docker.internal:8000/process-email")
+        # response = requests.post("http://host.docker.internal:8000/process-email")
+        response = requests.post("https://email-automation-app.fly.dev/process-email")
         response.raise_for_status()
         data = response.json()
         if data["status"] != "success":

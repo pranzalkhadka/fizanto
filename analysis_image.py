@@ -5,7 +5,7 @@ import ast
 from groq import Groq
 from io import StringIO
 import sys
-import anthropic
+# import anthropic
 
 
 load_dotenv()
@@ -13,9 +13,9 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 ATTACHMENT_DIR = "/app/attachments"
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+# ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 client_groq = Groq(api_key=GROQ_API_KEY)
-client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+# client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 
 def get_csv_metadata(file_path: str) -> dict:
@@ -51,23 +51,23 @@ def generate_analysis_code(metadata: dict, user_prompt: str, csv_path: str) -> s
     8. Ensure all print statements have closing parentheses.
     """
     try:
-        # response = client.chat.completions.create(
-        #     model="llama-3.3-70b-versatile",
-        #     messages=[
-        #         {"role": "system", "content": system_prompt},
-        #         {"role": "user", "content": analysis_prompt},
-        #     ]
-        # )
-        # code = response.choices[0].message.content.strip()
-        response = client.messages.create(
-            model="claude-3-7-sonnet-20250219",
-            max_tokens=4000,
-            system=system_prompt,
+        response = client_groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "user", "content": analysis_prompt}
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": analysis_prompt},
             ]
         )
-        code = response.content[0].text.strip()
+        code = response.choices[0].message.content.strip()
+        # response = client.messages.create(
+        #     model="claude-3-7-sonnet-20250219",
+        #     max_tokens=4000,
+        #     system=system_prompt,
+        #     messages=[
+        #         {"role": "user", "content": analysis_prompt}
+        #     ]
+        # )
+        # code = response.content[0].text.strip()
         # Clean the response to remove markdown and explanatory text
         code_lines = code.split('\n')
         cleaned_code = []

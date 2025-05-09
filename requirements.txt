@@ -1,5 +1,6 @@
 pandas
 matplotlib
+numpy
 seaborn
 groq
 anthropic
@@ -7,6 +8,7 @@ python-dotenv
 requests
 agno
 fastembed
+aiohttp
 lancedb
 mcp
 google-generativeai

@@ -15,6 +15,9 @@ from agno.tools import tool
 import re
 from agno.memory.v2.db.sqlite import SqliteMemoryDb
 from agno.memory.v2.memory import Memory
+from dotenv import load_dotenv
+
+load_dotenv()
 
 memory_db = SqliteMemoryDb(table_name="memory", db_file="/home/pranjal/Downloads/fizanto/memoryy/memory_session.db")
 memory = Memory(db=memory_db)
@@ -36,6 +39,8 @@ knowledge_base = AgentKnowledge(
     )
 )
 
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+claude_api_key = os.getenv("ANTHROPIC_API_KEY")
 
 def extract_email_metadata():
 
@@ -112,8 +117,8 @@ greeting_agent = Agent(
     description="You are an expert in conversational responses, acting like a human colleague.",
     # description="You are an expert in greeting people",
     # model=OpenRouter(id="gpt-4o"),
-    model=Groq(id="llama-3.3-70b-versatile"),
-    # model=Groq(id="gemma2-9b-it"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    model=Groq(id="gemma2-9b-it"),
     instructions=["Respond as if you are a human colleague and keep responses friendly and professional.",
                   "Deflect politely to personal questions.",],
     show_tool_calls=True,
@@ -137,7 +142,6 @@ def run_analysis(user_prompt: str) -> str:
     try:
         docker_command = [
             "docker", "run", "--rm",
-            "--add-host=host.docker.internal:host-gateway",
             "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
             "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
             "-e", f"ANALYSIS_PROMPT={user_prompt}",
@@ -155,59 +159,62 @@ def run_analysis(user_prompt: str) -> str:
     except Exception as e:
         return f"Error running Docker analysis: {str(e)}"
 
-    
-# knowledge_agent = Agent(
-#     name="Knowledge Agent",
-#     model=Groq(id="llama-3.3-70b-versatile"),
-#     tools=[run_analysis],
-#     instructions=["Call the run_analysis tool to get answer for the user's question",],
-#     show_tool_calls=True,
-#     markdown=True
-# )
+@tool(
+    name="retrieve_filepath",
+    description="Retrieve file path of the plot",
+    show_result=True,
+    stop_after_tool_call=True,
+    cache_results=False
+)
+def retrieve_filepath(user_prompt: str) -> str:
+    """
+    Use this function to retrieve file path of the plot.
+    """
+    try:
+        docker_command = [
+            "docker", "run", "--rm",
+            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
+            "-v", "/home/pranjal/Downloads/fizanto/output:/app/output",
+            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
+            "-e", f"VISUALIZATION_PROMPT={user_prompt}",
+            "vis-service"
+        ]
+        result = subprocess.run(
+            docker_command,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout or "No plots generated."
+    except subprocess.CalledProcessError as e:
+        return f"Failed to run Docker visualization: {e.stderr}"
+    except Exception as e:
+        return f"Error running Docker visualization: {str(e)}"
 
 
 knowledge_agent = Agent(
     name="Knowledge Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
-    tools=[run_analysis],
+    model=Groq(id="llama-3.3-70b-versatile"),
+    # model=Claude(id="claude-3-7-sonnet-20250219", api_key="claude_api_key"),
+    tools=[run_analysis, retrieve_filepath],
     knowledge=knowledge_base,
     search_knowledge=True,
-    instructions=["First search the knowledge base for answer.", 
-                  "If no relevant answer is found in the knowledge base, call the run_analysis tool to get the answer"],
+    instructions=["If the query is about creating plot, call the run_visualization tool to get filepath of the plot.",
+                  "If the query is about analysis, first search the knowledge base for relevant answer.", 
+                  "If no relevant answer is found in the knowledge base, call the run_analysis tool to get the answer.",
+                  ],
     show_tool_calls=True,
     markdown=True
 )
-
-
-# knowledge_agent = Agent(
-#     name="Knowledge Agent",
-#     # model=Groq(id="llama-3.3-70b-versatile"),
-#     # model=MistralChat(id="mistral-large-latest"),
-#     # model=Gemini(id="gemini-2.0-flash"),
-#     # model=OpenRouter(id="gpt-4o"),
-#     model=Claude(id="claude-3-7-sonnet-20250219", api_key="api-key"),
-#     description="You are an expert in looking for answers in the knowledge base.",
-#     # memory=memory,
-#     # enable_session_summaries=True,
-#     knowledge=knowledge_base,
-#     search_knowledge=True,
-#     instructions=["Always look for answers in the knowledge base.", "If you don't find an answer, say 'No relevant information found'."],
-#     show_tool_calls=True,
-#     markdown=True
-# )
 
 
 supervisor_team = Team(
     name="Supervisor Team",
     mode="route",
     members=[email_agent, knowledge_agent, greeting_agent],
-    # model=OpenRouter(id="gpt-4o"),
     memory=memory,
     enable_session_summaries=True,
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    # model=MistralChat(id="mistral-large-latest"),
-    model=Gemini(id="gemini-2.0-flash", api_key="api-key"),
+    model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
@@ -223,5 +230,5 @@ supervisor_team = Team(
 # supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the risk factors associated with the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("Could you show me the validation performance metrics? It'd be helpful to see some visualizations of the model's performance.", user_id=user_id, session_id=session_id)
-supervisor_team.print_response("What is the average annual income?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What is the average annual income?", user_id=user_id, session_id=session_id)
+supervisor_team.print_response("Create a bar plot of grade column.", user_id=user_id, session_id=session_id)

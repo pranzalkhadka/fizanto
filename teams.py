@@ -18,15 +18,15 @@ from agno.tools import tool
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from agno.models.google import Gemini
 
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 APP_ID = os.getenv('APP_ID')
 APP_PASSWORD = os.getenv('APP_PASSWORD')
-OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
-
 
 app = FastAPI()
 
@@ -63,13 +63,10 @@ memory = Memory(db=memory_db)
 user_id = "jon_hamm@example.com"
 session_id = "1001"
 
-
 def extract_email_metadata():
 
     session_summary = memory.get_session_summary(
     user_id=user_id, session_id=session_id)
-
-    # query = "Email about Lending Club Risk Management"
 
     results = knowledge_base.search(session_summary.summary)
 
@@ -79,7 +76,7 @@ def extract_email_metadata():
     sender_name = sender_match.group(1) if sender_match else None
     recipient = sender_match.group(2) if sender_match else None
 
-    subject_match = re.search(r"subject (.+?) at", content)
+    subject_match = re.search(r"about (.+?) at", content)
     subject = subject_match.group(1).strip()
 
     message_id_match = re.search(r"identified as <(.+?)>", content)
@@ -125,26 +122,11 @@ def send_email():
 
 email_agent = Agent(
     name="Send Email",
-    # description="You are an expert in sending emails.",
+    # description="Your only responsibility is sending emails.",
     # model=OpenRouter(id="gpt-4o"),
     model=Groq(id="llama-3.3-70b-versatile"),
     tools=[send_email],
     instructions=["Call the send_email tool to send an email"],
-    show_tool_calls=True,
-    markdown=True
-)
-
-
-knowledge_agent = Agent(
-    name="Knowledge Agent",
-    model=Groq(id="llama-3.3-70b-versatile"),
-    # model=OpenRouter(id="gpt-4o"),
-    description="You are an expert in looking for answers in the knowledge base.",
-    # memory=memory,
-    # enable_session_summaries=True,
-    knowledge=knowledge_base,
-    search_knowledge=True,
-    instructions=["Always look for answers in the knowledge base.", "If you don't find an answer, say 'No relevant information found'."],
     show_tool_calls=True,
     markdown=True
 )
@@ -154,26 +136,108 @@ greeting_agent = Agent(
     description="You are an expert in conversational responses, acting like a human colleague.",
     # description="You are an expert in greeting people",
     # model=OpenRouter(id="gpt-4o"),
-    model=Groq(id="llama-3.3-70b-versatile"),
-    # model=Groq(id="gemma2-9b-it"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    model=Groq(id="gemma2-9b-it"),
     instructions=["Respond as if you are a human colleague and keep responses friendly and professional.",
                   "Deflect politely to personal questions.",],
     show_tool_calls=True,
     markdown=True
 )
 
+import subprocess
+
+
+@tool(
+    name="run_analysis",
+    description="Run analysis to retrieve answer for the user query",
+    show_result=True,
+    stop_after_tool_call=True,
+    cache_results=False
+)
+def run_analysis(user_prompt: str) -> str:
+    """
+    Use this function to retreive answer for the user query.
+    """
+    try:
+        docker_command = [
+            "docker", "run", "--rm",
+            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
+            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
+            "-e", f"ANALYSIS_PROMPT={user_prompt}",
+            "analysis-service"
+        ]
+        result = subprocess.run(
+            docker_command,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout or "No analysis output generated."
+    except subprocess.CalledProcessError as e:
+        return f"Failed to run Docker analysis: {e.stderr}"
+    except Exception as e:
+        return f"Error running Docker analysis: {str(e)}"
+
+@tool(
+    name="retrieve_filepath",
+    description="Retrieve file path of the plot",
+    show_result=True,
+    stop_after_tool_call=True,
+    cache_results=False
+)
+def retrieve_filepath(user_prompt: str) -> str:
+    """
+    Use this function to retrieve file path of the plot.
+    """
+    try:
+        docker_command = [
+            "docker", "run", "--rm",
+            "-v", "/home/pranjal/Downloads/fizanto/attachments:/app/attachments",
+            "-v", "/home/pranjal/Downloads/fizanto/output:/app/output",
+            "-v", "/home/pranjal/Downloads/fizanto/.env:/app/.env",
+            "-e", f"VISUALIZATION_PROMPT={user_prompt}",
+            "vis-service"
+        ]
+        result = subprocess.run(
+            docker_command,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout or "No plots generated."
+    except subprocess.CalledProcessError as e:
+        return f"Failed to run Docker visualization: {e.stderr}"
+    except Exception as e:
+        return f"Error running Docker visualization: {str(e)}"
+
+
+knowledge_agent = Agent(
+    name="Knowledge Agent",
+    model=Groq(id="llama-3.3-70b-versatile"),
+    # model=Claude(id="claude-3-7-sonnet-20250219", api_key="claude_api_key"),
+    tools=[run_analysis, retrieve_filepath],
+    knowledge=knowledge_base,
+    search_knowledge=True,
+    instructions=["If the query is about creating plot, call the retrieve_filepath tool to get filepath of the plot.",
+                  "If the query is about analysis, first search the knowledge base for relevant answer.", 
+                  "If no relevant answer is found in the knowledge base, call the run_analysis tool to get the answer.",
+                  ],
+    show_tool_calls=True,
+    markdown=True
+)
+
+
 supervisor_team = Team(
     name="Supervisor Team",
     mode="route",
     members=[email_agent, knowledge_agent, greeting_agent],
-    # model=OpenRouter(id="gpt-4o"),
     memory=memory,
     enable_session_summaries=True,
-    model=Groq(id="llama-3.3-70b-versatile"),
+    model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
     description="You are a supervisor who can analyze the query and route to the appropriate agent.",
     instructions=[
         "Route to the Greeting Agent for greetings.",
-        "Route to the Email Agent only for sending emails.",
+        "Route to the Email Agent only for sending emails. Not for email inquiries.",
         "Route to Knowledge Agent for rest of the questions."
     ],
     show_tool_calls=True,
