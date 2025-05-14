@@ -1,7 +1,7 @@
 import lancedb
 import json
 
-DB_URI = "/home/pranjal/Downloads/fizanto/mrm_report_template/tmp_app/lancedb"
+DB_URI = "/home/pranjal/Downloads/fizanto/mrm_report/tmp_app/lancedb"
 TABLE_NAME = "data_memory"
 
 def check_stored_data():

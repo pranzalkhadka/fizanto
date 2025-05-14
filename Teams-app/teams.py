@@ -19,6 +19,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from agno.models.google import Gemini
+from agno.models.anthropic import Claude
+
 
 
 load_dotenv()
@@ -27,6 +29,8 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 APP_ID = os.getenv('APP_ID')
 APP_PASSWORD = os.getenv('APP_PASSWORD')
+
+claude_api_key = "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"
 
 app = FastAPI()
 
@@ -252,8 +256,8 @@ def retrieve_filepath(user_prompt: str) -> str:
 
 knowledge_agent = Agent(
     name="Knowledge Agent",
-    model=Groq(id="llama-3.3-70b-versatile"),
-    # model=Claude(id="claude-3-7-sonnet-20250219", api_key="claude_api_key"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
     tools=[run_analysis, retrieve_filepath],
     knowledge=knowledge_base,
     search_knowledge=True,

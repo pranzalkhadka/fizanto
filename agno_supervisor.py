@@ -40,7 +40,8 @@ knowledge_base = AgentKnowledge(
 )
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-claude_api_key = os.getenv("ANTHROPIC_API_KEY")
+# claude_api_key = os.getenv("ANTHROPIC_API_KEY")
+claude_api_key = "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"
 
 def extract_email_metadata():
 
@@ -234,8 +235,8 @@ def retrieve_filepath(user_prompt: str) -> str:
 
 knowledge_agent = Agent(
     name="Knowledge Agent",
-    model=Groq(id="llama-3.3-70b-versatile"),
-    # model=Claude(id="claude-3-7-sonnet-20250219", api_key="claude_api_key"),
+    # model=Groq(id="llama-3.3-70b-versatile"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
     tools=[run_analysis, retrieve_filepath],
     knowledge=knowledge_base,
     search_knowledge=True,
@@ -267,8 +268,8 @@ supervisor_team = Team(
 
 
 # supervisor_team.print_response("I hope you got my email with regards to the Lending Club Credit Risk Model. Can you confirm that?", user_id=user_id, session_id=session_id)
-# supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
+supervisor_team.print_response("What are the core assumptions of the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What are the risk factors associated with the Lending Club loan default prediction model?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("What input features are used in the Lending Club credit risk model?", user_id=user_id, session_id=session_id)
-supervisor_team.print_response("What is the average annual income?", user_id=user_id, session_id=session_id)
+# supervisor_team.print_response("What is the average annual income?", user_id=user_id, session_id=session_id)
 # supervisor_team.print_response("Create a bar plot of grade column.", user_id=user_id, session_id=session_id)

@@ -1,6 +1,6 @@
 from agno.agent import Agent, AgentKnowledge
 from agno.models.groq import Groq
-from agno.models.openrouter import OpenRouter
+from agno.models.anthropic import Claude
 from agno.models.google import Gemini
 from agno.team import Team
 from agno.vectordb.lancedb import LanceDb
@@ -10,6 +10,15 @@ from agno.tools import tool
 from weasyprint import HTML
 from agno.tools import tool
 import os
+
+claude_api_key = "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"
+
+# groq_api_key = "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"
+
+# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+# GEMINI_API_KEY="AIzaSyBXiMNmOVmrCnOCP-sjGcaPnL1bTfzDI2Y"
+
 
 knowledge_base = AgentKnowledge(
     vector_db=LanceDb(
@@ -21,115 +30,129 @@ knowledge_base = AgentKnowledge(
 
 Introduction_agent = Agent(
     name="Introduction Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Introduction section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for context about the financial forecasting model and its validation.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate a detailed Introduction section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for the model’s purpose, business context, and performance summary.",
+    "Highlight the model’s role in loan approval decisions.",
+    "Return in a Markdown format."
+],
     show_tool_calls=False,
     markdown=False
 )
 
 Overview_agent = Agent(
     name="Overview Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Model Overview section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for details about the financial forecasting model's design and purpose.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate one or two paragraphs for the Model Overview section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for the model’s design, purpose, and data sources.",
+    "Include key features’ roles in predicting defaults.",
+    "Return the content in Markdown format, using bullet points for features if needed."
+],
     show_tool_calls=False,
     markdown=False
 )
 
 Scope_agent = Agent(
     name="Scope Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Validation Scope and Objectives section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for the scope of the model's validation.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate a paragraph for the Validation Scope and Objectives section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for validation goals  and scope.",
+    "Return the paragraph in Markdown format."
+],
     show_tool_calls=False,
     markdown=False
 )
 
 Methodology_agent = Agent(
     name="Methodology Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Validation Methodology section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for methods used in the model's validation.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate one or two paragraphs for the Validation Methodology section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for validation methods.",
+    "Return the content in Markdown format."
+],
     show_tool_calls=False,
     markdown=False
 )
 
 Recommendations_agent = Agent(
     name="Recommendations Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Recommendations section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for suggested improvements from the validation.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate a paragraph with bullet points for the Recommendations section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for suggested improvements and limitations.",
+    "Return the content in Markdown format."
+],
     show_tool_calls=False,
     markdown=False
 )
 
 Conclusion_agent = Agent(
     name="Conclusion Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
+    # model=Groq(id="llama-3.1-8b-instant", api_key=groq_api_key),
+    # model=Gemini(id="gemini-2.0-flash", api_key=GEMINI_API_KEY),
+    # model=Groq(id="gemma2-9b-it"),
     # model=OpenRouter(id="gpt-4o"),
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-        "Generate a single paragraph for the Conclusion section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for the overall assessment of the model's validation.",
-        "Return the paragraph in Markdown format.",
-    ],
+    "Generate one or two paragraphs for the Conclusion section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for the model’s performance (e.g., AUC-ROC, recall), limitations, and overall assessment.",
+    "Return the content in Markdown format."
+],
     show_tool_calls=False,
     markdown=False
 )
 
-Appendices_agent = Agent(
-    name="Appendices Agent",
-    # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Groq(id="gemma2-9b-it"),
-    # model=OpenRouter(id="gpt-4o"),
-    knowledge=knowledge_base,
-    search_knowledge=True,
-    instructions=[
-        "Generate a single paragraph for the Appendices section of a Model Risk Management (MRM) Validation Report.",
-        "Search the knowledge base for supplementary materials related to the validation.",
-        "Return the paragraph in Markdown format.",
-    ],
-    show_tool_calls=False,
-    markdown=False
-)
+# Appendices_agent = Agent(
+#     name="Appendices Agent",
+#     # model=Groq(id="llama-3.3-70b-versatile"),
+#     model=Groq(id="gemma2-9b-it"),
+#     # model=OpenRouter(id="gpt-4o"),
+#     knowledge=knowledge_base,
+#     search_knowledge=True,
+#     instructions=[
+#         "Generate a single paragraph for the Appendices section of a Model Risk Management (MRM) Validation Report.",
+#         "Search the knowledge base for supplementary materials related to the validation.",
+#         "Return the paragraph in Markdown format.",
+#     ],
+#     show_tool_calls=False,
+#     markdown=False
+# )
 
 
 @tool(
@@ -170,10 +193,11 @@ supervisor_team = Team(
         Methodology_agent,
         Recommendations_agent,
         Conclusion_agent,
-        Appendices_agent,
+        # Appendices_agent,
     ],
     # model=Groq(id="llama-3.3-70b-versatile"),
-    model=Gemini(id="gemini-2.0-flash"),
+    # model=Gemini(id="gemini-2.0-flash"),
+    model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
     # model=OpenRouter(id="gpt-4o"),
     description="Coordinates the generation of a Model Risk Management (MRM) Validation Report.",
     tools=[FileTools(), html_to_pdf],
@@ -188,8 +212,7 @@ supervisor_team = Team(
     "   - Ask Methodology Agent for the Validation Methodology section.",
     "   - Ask Recommendations Agent for the Recommendations section.",
     "   - Ask Conclusion Agent for the Conclusion section.",
-    "   - Ask Appendices Agent for the Appendices section.",
-    "3. Collect the Markdown content into a dictionary with keys: introduction_text, model_overview_text, validation_scope_text, methodology_text, recommendations_text, conclusion_text, appendices_text.",
+    "3. Collect the Markdown content into a dictionary with keys: introduction_text, model_overview_text, validation_scope_text, methodology_text, recommendations_text, conclusion_text.",
     "4. Use that dictionary to fill the placeholders in the HTML template.",
     "5. Save the HTML file at report.html."
     "6. Convert 'report.html' to 'report.pdf' using html_to_pdf tool."
