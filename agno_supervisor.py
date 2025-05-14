@@ -41,7 +41,7 @@ knowledge_base = AgentKnowledge(
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 # claude_api_key = os.getenv("ANTHROPIC_API_KEY")
-claude_api_key = "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"
+claude_api_key = "api-key"
 
 def extract_email_metadata():
 

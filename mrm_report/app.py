@@ -11,7 +11,7 @@ from weasyprint import HTML
 from agno.tools import tool
 import os
 
-claude_api_key = "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"
+claude_api_key = "api-key"
 
 # groq_api_key = "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"
 
@@ -38,10 +38,10 @@ Introduction_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate a detailed Introduction section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Generate a highly detailed Introduction section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
     "Search the knowledge base for the model’s purpose, business context, and performance summary.",
     "Highlight the model’s role in loan approval decisions.",
-    "Return in a Markdown format."
+    "Return the content in a Markdown format."
 ],
     show_tool_calls=False,
     markdown=False
@@ -57,10 +57,10 @@ Overview_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate one or two paragraphs for the Model Overview section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Generate a highly detailed Model Overview section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
     "Search the knowledge base for the model’s design, purpose, and data sources.",
     "Include key features’ roles in predicting defaults.",
-    "Return the content in Markdown format, using bullet points for features if needed."
+    "Return the content in Markdown format."
 ],
     show_tool_calls=False,
     markdown=False
@@ -76,9 +76,9 @@ Scope_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate a paragraph for the Validation Scope and Objectives section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
-    "Search the knowledge base for validation goals  and scope.",
-    "Return the paragraph in Markdown format."
+    "Generate a highly detailed Validation Scope and Objectives section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Search the knowledge base for validation goals and scope.",
+    "Return the content in Markdown format."
 ],
     show_tool_calls=False,
     markdown=False
@@ -94,7 +94,7 @@ Methodology_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate one or two paragraphs for the Validation Methodology section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Generate a highly detailed Validation Methodology section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
     "Search the knowledge base for validation methods.",
     "Return the content in Markdown format."
 ],
@@ -112,7 +112,7 @@ Recommendations_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate a paragraph with bullet points for the Recommendations section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Generate a highly detailed Recommendations section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
     "Search the knowledge base for suggested improvements and limitations.",
     "Return the content in Markdown format."
 ],
@@ -130,7 +130,7 @@ Conclusion_agent = Agent(
     knowledge=knowledge_base,
     search_knowledge=True,
     instructions=[
-    "Generate one or two paragraphs for the Conclusion section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
+    "Generate a highly detailed Conclusion section of a Model Risk Management (MRM) Validation Report for a credit risk model.",
     "Search the knowledge base for the model’s performance (e.g., AUC-ROC, recall), limitations, and overall assessment.",
     "Return the content in Markdown format."
 ],
@@ -141,14 +141,30 @@ Conclusion_agent = Agent(
 # Appendices_agent = Agent(
 #     name="Appendices Agent",
 #     # model=Groq(id="llama-3.3-70b-versatile"),
-#     model=Groq(id="gemma2-9b-it"),
+#     # model=Groq(id="gemma2-9b-it"),
+#     model=Claude(id="claude-3-7-sonnet-20250219", api_key=claude_api_key),
 #     # model=OpenRouter(id="gpt-4o"),
 #     knowledge=knowledge_base,
 #     search_knowledge=True,
+#     # instructions=[
+#     #     "Generate a highly detailed Appendices section for a Model Risk Management (MRM) Validation Report for a credit risk model, contributing to a 100+ page report.",
+#     #     "Search the knowledge base for supplementary materials, including model documentation, validation results, feature importance, data quality logs, governance records, stress testing, fairness analyses, and monitoring plans.",
+#     #     "Produce multiple subsections in Markdown format, such as:",
+#     #     "  - Model Documentation: LightGBM methodology, hyperparameters, tuning logs.",
+#     #     "  - Validation Results: K-fold CV, backtesting, fairness metrics (tables).",
+#     #     "  - Feature Importance: Top 20 features with SHAP values, descriptions.",
+#     #     "  - Data Quality Logs: Missing value imputation, preprocessing details.",
+#     #     "  - Governance Records: MRM committee approvals, independent reviews.",
+#     #     "  - Stress Testing: Scenario analyses (e.g., recession, rate hikes).",
+#     #     "  - Fairness Analyses: Bias assessments, mitigation steps.",
+#     #     "  - Monitoring Plans: Drift detection, retraining triggers.",
+#     #     "Include at least 10 Markdown tables (e.g., metrics, features, preprocessing steps).",
+#     #     "Aim for 50+ pages of content, ensuring SR 11-7 traceability."
+#     # ],
 #     instructions=[
-#         "Generate a single paragraph for the Appendices section of a Model Risk Management (MRM) Validation Report.",
+#         "Generate a detailed Appendices section of a Model Risk Management (MRM) Validation Report.",
 #         "Search the knowledge base for supplementary materials related to the validation.",
-#         "Return the paragraph in Markdown format.",
+#         "Return only text in Markdown format.",
 #     ],
 #     show_tool_calls=False,
 #     markdown=False
@@ -164,7 +180,7 @@ Conclusion_agent = Agent(
 )
 def html_to_pdf(input_file: str = "report.html", output_file: str = "report.pdf") -> str:
     """
-    Convert an HTML file to a PDF file using WeasyPrint.
+    Convert an HTML file to a PDF file.
     
     Args:
         input_file (str): Path to the input HTML file (default: 'report.html').
@@ -182,7 +198,6 @@ def html_to_pdf(input_file: str = "report.html", output_file: str = "report.pdf"
         return f"Error converting HTML to PDF: {str(e)}"
 
 
-
 supervisor_team = Team(
     name="Supervisor Team",
     mode="coordinate",
@@ -193,7 +208,6 @@ supervisor_team = Team(
         Methodology_agent,
         Recommendations_agent,
         Conclusion_agent,
-        # Appendices_agent,
     ],
     # model=Groq(id="llama-3.3-70b-versatile"),
     # model=Gemini(id="gemini-2.0-flash"),
