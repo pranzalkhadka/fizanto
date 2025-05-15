@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 40px;
             line-height: 1.6;
             color: #333;
         }
@@ -18,26 +18,60 @@
         h1 {
             color: #003087;
             text-align: center;
+            page-break-before: always; /* Cover page on new page */
         }
         h2 {
             color: #003087;
             border-bottom: 1px solid #ccc;
             padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        h3, h4, h5, h6 {
+            color: #003087;
+            margin-top: 15px;
         }
         p {
             margin: 10px 0;
         }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            page-break-inside: avoid; /* Prevent breaking sections mid-page */
+        }
+        .cover {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .cover p {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+        /* Ensure nested Markdown content is styled */
+        .markdown-content h1, .markdown-content h2, .markdown-content h3,
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin: 15px 0 10px;
+        }
+        .markdown-content p {
+            margin: 10px 0;
+        }
+        .markdown-content ul, .markdown-content ol {
+            margin: 10px 0;
+            padding-left: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Cover Page -->
-        <div class="section">
-            <h1>MRM report</h1>
-            <p>subtitle MRM report</p>
+        <div class="section cover">
+            <h1>Model Risk Management Validation Report</h1>
+            <p>Subtitle: MRM Report</p>
             <p>14th May 2025</p>
             <p>Fizanto</p>
         </div>
@@ -45,39 +79,44 @@
         <!-- Introduction -->
         <div class="section">
             <h2>1. Introduction</h2>
-            <p>{{ introduction_text }}</p>
+            <div class="markdown-content">{{ introduction_text }}</div>
         </div>
 
         <!-- Model Overview -->
         <div class="section">
             <h2>2. Model Overview</h2>
-            <p>{{ model_overview_text }}</p>
+            <div class="markdown-content">{{ model_overview_text }}</div>
         </div>
 
         <!-- Validation Scope and Objectives -->
         <div class="section">
             <h2>3. Validation Scope and Objectives</h2>
-            <p>{{ validation_scope_text }}</p>
+            <div class="markdown-content">{{ validation_scope_text }}</div>
         </div>
 
         <!-- Validation Methodology -->
         <div class="section">
             <h2>4. Validation Methodology</h2>
-            <p>{{ methodology_text }}</p>
+            <div class="markdown-content">{{ methodology_text }}</div>
         </div>
 
         <!-- Recommendations -->
         <div class="section">
             <h2>5. Recommendations</h2>
-            <p>{{ recommendations_text }}</p>
+            <div class="markdown-content">{{ recommendations_text }}</div>
         </div>
 
         <!-- Conclusion -->
         <div class="section">
             <h2>6. Conclusion</h2>
-            <p>{{ conclusion_text }}</p>
+            <div class="markdown-content">{{ conclusion_text }}</div>
         </div>
 
+        <!-- Appendices -->
+        <div class="section">
+            <h2>7. Appendices</h2>
+            <div class="markdown-content">{{ appendices_text }}</div>
+        </div>
     </div>
 </body>
 </html>
